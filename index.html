@@ -1,1 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Honeycomb Inspired Design — Biomimicry Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #180E06;
+  --bg2:     #211306;
+  --bg3:     #2A1A09;
+  --surface: #37200C;
+  --surface2:#442910;
+  --border:  rgba(200,133,58,0.18);
+  --border2: rgba(200,133,58,0.38);
+  --honey:   #C8853A;
+  --honey2:  #E5A030;
+  --honey3:  #8B5520;
+  --gold:    #F5CF5A;
+  --gold2:   #FFE580;
+  --amber:   #D4860A;
+  --brown:   #6B3A10;
+  --red:     #C0473A;
+  --blue:    #5B8FBF;
+  --purple:  #9B7DD4;
+  --teal:    #4A9A6E;
+  --text:    #F5E8C0;
+  --text2:   #C4956A;
+  --text3:   #7A5530;
+  --glow:    rgba(229,160,48,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;min-height:100vh;cursor:default}
 
+/* ── HEX GRID BACKGROUND ── */
+#hexBg{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.55}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;background:rgba(24,14,6,0.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;gap:0;height:56px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:18px;color:var(--honey2);margin-right:2.5rem;white-space:nowrap;letter-spacing:0.03em;display:flex;align-items:center;gap:8px}
+.nav-logo-hex{width:22px;height:22px;display:inline-block;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:linear-gradient(135deg,var(--honey2),var(--amber));animation:hexPulse 4s ease-in-out infinite}
+@keyframes hexPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.4) drop-shadow(0 0 8px var(--honey))}}
+.nav-links{display:flex;gap:0;flex:1;overflow-x:auto}
+.nav-btn{padding:0 16px;height:56px;font-size:12px;font-weight:500;color:var(--text3);cursor:pointer;border:none;background:none;letter-spacing:.06em;text-transform:uppercase;transition:color .2s,border-color .2s;white-space:nowrap;border-bottom:2px solid transparent;font-family:'Outfit',sans-serif}
+.nav-btn:hover{color:var(--text2)}
+.nav-btn.active{color:var(--honey2);border-bottom-color:var(--honey2)}
+
+/* ── PAGES ── */
+.page{display:none;min-height:calc(100vh - 56px);position:relative;z-index:10}
+.page.active{display:block}
+
+/* ── HERO ── */
+#p-intro{background:transparent}
+.hero{min-height:calc(100vh - 56px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:4rem;gap:4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 65% 50%,rgba(200,133,58,0.08) 0%,transparent 65%);pointer-events:none}
+.hero-left{position:relative;z-index:2}
+.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--honey);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:32px;height:1.5px;background:linear-gradient(90deg,var(--honey),transparent)}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4vw,3.8rem);line-height:1.08;margin-bottom:1.5rem;color:var(--text)}
+.hero-h1 em{color:var(--honey2);font-style:italic;background:linear-gradient(120deg,var(--honey2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-p{font-size:15px;line-height:1.85;color:var(--text2);max-width:500px;margin-bottom:2.5rem}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 28px;background:linear-gradient(135deg,var(--honey3),var(--honey));border:1px solid var(--honey2);color:var(--text);font-size:13px;font-weight:500;border-radius:6px;cursor:pointer;transition:all .25s;letter-spacing:.04em;font-family:'Outfit',sans-serif;position:relative;overflow:hidden}
+.hero-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--honey2),var(--gold));opacity:0;transition:opacity .25s}
+.hero-cta:hover::before{opacity:1}
+.hero-cta:hover{color:var(--bg);border-color:var(--gold)}
+.hero-cta span{position:relative;z-index:1}
+.hero-hex-bg{position:relative;z-index:1}
+.hero-hex-bg canvas{display:block}
+
+.intro-sections{padding:0 4rem 6rem;position:relative;z-index:10}
+.section-block{margin-bottom:5rem}
+.section-eyebrow{font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--honey);margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.section-eyebrow::before{content:'';width:20px;height:1px;background:var(--honey)}
+.section-h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1.25rem;line-height:1.18;color:var(--text)}
+.section-p{font-size:14px;line-height:1.9;color:var(--text2);max-width:700px}
+.section-p+.section-p{margin-top:.75rem}
+.section-p em{color:var(--honey2)}
+
+/* ── HEX CARDS ── */
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2rem}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color .3s,transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;top:-40px;right:-40px;width:90px;height:90px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:linear-gradient(135deg,rgba(200,133,58,0.08),rgba(200,133,58,0.03));transition:transform .4s}
+.info-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(200,133,58,0.1)}
+.info-card:hover::before{transform:scale(1.2) rotate(15deg)}
+.info-card-icon{width:38px;height:38px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:linear-gradient(135deg,var(--honey3),rgba(200,133,58,0.4));display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.info-card-title{font-size:14px;font-weight:600;margin-bottom:.5rem;color:var(--text)}
+.info-card-p{font-size:13px;line-height:1.75;color:var(--text2)}
+
+.timeline{margin-top:2rem;position:relative;padding-left:2.5rem}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:1.5px;background:linear-gradient(180deg,var(--honey),transparent)}
+.timeline-item{position:relative;margin-bottom:2rem;padding-left:1.5rem}
+.timeline-item::before{content:'';position:absolute;left:-1.7rem;top:5px;width:10px;height:10px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:var(--honey);border:2px solid var(--bg)}
+.timeline-year{font-size:11px;font-weight:600;color:var(--honey);letter-spacing:.08em;margin-bottom:2px}
+.timeline-title{font-size:14px;font-weight:500;margin-bottom:4px;color:var(--text)}
+.timeline-desc{font-size:13px;color:var(--text2);line-height:1.65}
+
+.quote-block{border-left:3px solid var(--honey);padding:1.5rem 2rem;background:linear-gradient(90deg,rgba(200,133,58,0.1),rgba(200,133,58,0.03));border-radius:0 12px 12px 0;margin:2rem 0}
+.quote-text{font-family:'Playfair Display',serif;font-size:1.15rem;line-height:1.65;color:var(--text);margin-bottom:.75rem;font-style:italic}
+.quote-attr{font-size:12px;color:var(--text3)}
+
+.examples-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:2rem}
+.example-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color .3s}
+.example-card:hover{border-color:var(--border2)}
+.example-num{font-family:'Playfair Display',serif;font-size:2.4rem;color:rgba(200,133,58,0.25);line-height:1;flex-shrink:0;width:44px}
+.example-content-title{font-size:13px;font-weight:600;margin-bottom:4px;color:var(--text)}
+.example-content-p{font-size:12px;color:var(--text2);line-height:1.65}
+
+/* ── REFERENCE PAGE ── */
+#p-reference{padding:3rem 4rem;background:transparent}
+.ref-header{margin-bottom:2.5rem}
+.ref-tabs{display:flex;gap:4px;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:0}
+.ref-tab{padding:8px 20px;font-size:13px;color:var(--text3);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;font-family:'Outfit',sans-serif;letter-spacing:.02em}
+.ref-tab:hover{color:var(--text2)}
+.ref-tab.active{color:var(--honey2);border-bottom-color:var(--honey2)}
+.ref-content{display:none}
+.ref-content.active{display:block}
+
+.shape-compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:2rem}
+.shape-ref-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .3s}
+.shape-ref-card.best{border-color:var(--honey2);border-width:2px}
+.shape-ref-card:hover{border-color:var(--border2)}
+.shape-ref-head{padding:.75rem 1rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg3)}
+.shape-ref-name{font-size:14px;font-weight:500;color:var(--text)}
+.shape-ref-badge{font-size:10px;padding:2px 9px;border-radius:10px;font-weight:600}
+.shape-ref-canvas{display:flex;justify-content:center;padding:1rem;background:var(--bg2)}
+.shape-ref-props{padding:.75rem 1rem}
+.prop-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(200,133,58,0.08);font-size:12px}
+.prop-row:last-child{border-bottom:none}
+.prop-lbl{color:var(--text3)}
+.prop-val{font-weight:500;color:var(--text)}
+.prop-bar-wrap{display:flex;align-items:center;gap:6px}
+.prop-bar-track{width:60px;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.prop-bar-fill{height:4px;border-radius:2px}
+
+.math-section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;margin-bottom:1.5rem}
+.math-title{font-size:14px;font-weight:600;margin-bottom:1rem;color:var(--honey2)}
+.math-formula{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);margin:1rem 0;padding:.75rem 1.5rem;background:var(--bg2);border-radius:8px;border-left:3px solid var(--honey);letter-spacing:.04em}
+.math-p{font-size:13px;color:var(--text2);line-height:1.75}
+
+.table-wrap{overflow-x:auto;margin-bottom:2rem;border-radius:10px;border:1px solid var(--border)}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{text-align:left;padding:10px 14px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);border-bottom:1px solid var(--border);background:var(--bg3)}
+.data-table td{padding:9px 14px;border-bottom:1px solid var(--border)}
+.data-table tr.highlight td{background:rgba(200,133,58,0.06);color:var(--honey2);font-weight:500}
+.data-table tr:hover td{background:rgba(200,133,58,0.04)}
+.data-table tr:last-child td{border-bottom:none}
+
+.app-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.app-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:border-color .3s,transform .3s}
+.app-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.app-card-industry{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--honey);margin-bottom:.5rem}
+.app-card-title{font-size:14px;font-weight:600;margin-bottom:.5rem;color:var(--text)}
+.app-card-p{font-size:12px;color:var(--text2);line-height:1.7}
+.app-card-stat{margin-top:.75rem;padding:.5rem .85rem;background:var(--bg2);border-radius:8px;font-size:11px;color:var(--honey2);border-left:2px solid var(--honey)}
+
+/* ── SIMULATOR ── */
+#p-sim{padding:2rem 2rem 3rem;background:transparent}
+.sim-layout{display:grid;grid-template-columns:290px 1fr;gap:1.5rem;min-height:calc(100vh - 56px - 4rem)}
+.sim-controls{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;height:fit-content;position:sticky;top:70px}
+.ctrl-section{margin-bottom:1.5rem}
+.ctrl-section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px}
+.ctrl-section-title::before{content:'⬡';color:var(--honey);font-size:12px}
+.ctrl-row{margin-bottom:.85rem}
+.ctrl-lbl{font-size:12px;color:var(--text2);margin-bottom:5px;display:flex;justify-content:space-between}
+.ctrl-lbl span{color:var(--honey2);font-weight:600}
+input[type=range]{width:100%;cursor:pointer;-webkit-appearance:none;appearance:none;height:4px;background:var(--bg3);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,var(--honey2),var(--amber));cursor:pointer;border:2px solid var(--bg);box-shadow:0 0 0 0 rgba(229,160,48,0);transition:box-shadow .2s}
+input[type=range]::-webkit-slider-thumb:active{box-shadow:0 0 0 6px rgba(229,160,48,0.2)}
+select{width:100%;font-size:12px;padding:7px 10px;border:1px solid var(--border2);border-radius:6px;background:var(--bg2);color:var(--text);cursor:pointer;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s}
+select:focus{border-color:var(--honey)}
+.shape-toggles{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sh-tog{padding:6px 8px;font-size:11px;font-weight:500;border:1px solid var(--border);border-radius:6px;cursor:pointer;text-align:center;color:var(--text3);transition:all .2s;background:transparent;font-family:'Outfit',sans-serif}
+.sh-tog:hover{border-color:var(--border2);color:var(--text2)}
+.sh-tog.on{color:var(--bg);border-color:transparent;font-weight:600}
+.load-btns{display:flex;flex-direction:column;gap:5px}
+.load-btn{padding:7px 10px;font-size:12px;border:1px solid var(--border);border-radius:6px;cursor:pointer;text-align:left;color:var(--text3);background:transparent;transition:all .2s;display:flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif}
+.load-btn:hover{color:var(--text2);border-color:var(--border2)}
+.load-btn.on{background:rgba(200,133,58,0.15);border-color:var(--honey);color:var(--honey2)}
+.load-icon{width:14px;height:14px;flex-shrink:0}
+
+.viz-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}
+.viz-panel-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:1rem;display:flex;align-items:center;gap:6px}
+.viz-panel-title::before{content:'⬡';color:var(--honey)}
+.cells-grid{display:grid;gap:12px}
+.cell-panel{border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .3s}
+.cell-panel.winner-panel{border-color:var(--honey2);border-width:2px;box-shadow:0 0 20px rgba(229,160,48,0.1)}
+.cell-panel.failing-panel{border-color:var(--red);border-width:2px}
+.cell-head{display:flex;justify-content:space-between;align-items:center;padding:.5rem 1rem;background:var(--bg3);border-bottom:1px solid var(--border)}
+.cell-name{font-size:13px;font-weight:600}
+.cell-badge{font-size:10px;padding:2px 9px;border-radius:10px;font-weight:600}
+.cell-canvas-wrap{background:var(--bg);display:flex;justify-content:center;padding:.75rem}
+.cell-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--border)}
+.cell-stat{padding:.5rem .75rem;border-right:1px solid var(--border);font-size:11px}
+.cell-stat:last-child{border-right:none}
+.cell-stat-lbl{color:var(--text3);margin-bottom:2px}
+.cell-stat-val{font-weight:600;color:var(--text)}
+.stress-bar{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:4px}
+.stress-fill{height:3px;border-radius:2px;transition:width .5s,background .5s}
+
+.summary-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.s-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;transition:border-color .3s}
+.s-card:hover{border-color:var(--border2)}
+.s-card-lbl{font-size:11px;color:var(--text3);margin-bottom:4px}
+.s-card-val{font-size:20px;font-weight:600}
+.s-card-sub{font-size:11px;color:var(--text3);margin-top:2px}
+
+.verdict{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--honey);border-radius:0 12px 12px 0;padding:1rem 1.5rem;font-size:13px;line-height:1.75;color:var(--text2)}
+.verdict strong{color:var(--text);font-weight:600}
+.verdict .warn{color:var(--red)}
+
+/* ── ABOUT PAGE ── */
+#p-about{padding:3rem 4rem;background:transparent}
+.about-hero{max-width:720px;margin-bottom:4rem}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-bottom:4rem}
+.about-block-title{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:1rem;color:var(--text)}
+.about-p{font-size:13px;color:var(--text2);line-height:1.85;margin-bottom:.75rem}
+.sources-list{list-style:none}
+.sources-list li{padding:.75rem 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2);line-height:1.65}
+.sources-list li:last-child{border-bottom:none}
+.sources-list strong{color:var(--text);display:block;margin-bottom:2px;font-weight:600}
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:1.5rem}
+.tag{padding:4px 12px;font-size:11px;border:1px solid var(--border2);border-radius:20px;color:var(--text3);transition:all .2s}
+.tag:hover{border-color:var(--honey);color:var(--honey2)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.page.active .anim{animation:fadeUp .5s ease forwards}
+.page.active .anim-d1{animation-delay:.05s;opacity:0}
+.page.active .anim-d2{animation-delay:.14s;opacity:0}
+.page.active .anim-d3{animation-delay:.24s;opacity:0}
+.page.active .anim-d4{animation-delay:.35s;opacity:0}
+
+@keyframes honeyDrip{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+@keyframes cellGlow{0%,100%{opacity:.55}50%{opacity:.9}}
+
+/* ── DROP TEST PAGE ── */
+#p-droptest{padding:2rem 2rem 3rem;background:transparent}
+.dt-header{margin-bottom:1.5rem}
+.dt-controls{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1.8rem;margin-bottom:1.5rem}
+.dt-ctrl-group{display:flex;flex-direction:column;gap:4px;min-width:150px}
+.dt-ctrl-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);display:flex;justify-content:space-between}
+.dt-ctrl-lbl span{color:var(--honey2)}
+.dt-angle-vis{width:100%;height:36px;margin-top:4px;border-radius:6px;background:var(--bg2);overflow:hidden}
+.dt-drop-btn{margin-left:auto;padding:12px 32px;background:linear-gradient(135deg,var(--honey3),var(--honey));border:1px solid var(--honey2);color:var(--text);font-size:13px;font-weight:600;border-radius:8px;cursor:pointer;transition:all .25s;letter-spacing:.05em;display:flex;align-items:center;gap:10px;font-family:'Outfit',sans-serif;position:relative;overflow:hidden}
+.dt-drop-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--honey2),var(--gold));opacity:0;transition:opacity .25s}
+.dt-drop-btn:hover::before{opacity:1}
+.dt-drop-btn:hover{color:var(--bg)}
+.dt-drop-btn span{position:relative;z-index:1}
+.dt-drop-btn:disabled{opacity:.45;cursor:not-allowed}
+.dt-drop-btn.running{background:rgba(192,71,58,0.2);border-color:var(--red);color:var(--red)}
+.dt-drop-btn.running::before{display:none}
+
+/* 6-panel drop test grid: 3 per row */
+.dt-panels{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:1.5rem}
+@media(max-width:800px){.dt-panels{grid-template-columns:1fr}}
+.dt-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.dt-panel.dt-winner{border-color:var(--honey2);border-width:2px;box-shadow:0 0 24px rgba(229,160,48,0.12)}
+.dt-panel.dt-loser{border-color:var(--red);border-width:2px}
+.dt-panel-head{padding:.65rem 1rem;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.dt-panel-name{font-size:13px;font-weight:600}
+.dt-panel-badge{font-size:10px;padding:2px 10px;border-radius:10px;font-weight:600}
+.dt-canvas-wrap{background:var(--bg);padding:0;position:relative;overflow:hidden}
+.dt-canvas-wrap canvas{display:block;width:100%}
+.dt-stats{padding:.75rem 1rem;display:grid;grid-template-columns:repeat(2,1fr);gap:5px 10px;border-top:1px solid var(--border)}
+.dt-stat-row{font-size:11px;display:flex;flex-direction:column;gap:1px}
+.dt-stat-lbl{color:var(--text3)}
+.dt-stat-val{font-weight:600;color:var(--text)}
+.dt-impact-bar-wrap{padding:.5rem 1rem .75rem;border-top:1px solid var(--border)}
+.dt-impact-bar-lbl{font-size:10px;color:var(--text3);margin-bottom:4px;display:flex;justify-content:space-between}
+.dt-impact-track{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.dt-impact-fill{height:5px;border-radius:3px;width:0;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.dt-summary{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--honey);border-radius:0 12px 12px 0;padding:1rem 1.5rem;font-size:13px;line-height:1.75;color:var(--text2)}
+.dt-summary strong{color:var(--text);font-weight:600}
+.dt-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:1rem;font-size:11px;color:var(--text3)}
+.dt-leg-item{display:flex;align-items:center;gap:5px}
+.dt-leg-dot{width:10px;height:10px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
+.dt-phase-indicator{position:absolute;top:8px;right:8px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.07em;pointer-events:none}
+
+/* ── SECTION ROW LABEL for 2-row drop test ── */
+.dt-row-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--honey);margin-bottom:.6rem;padding:.3rem .5rem;border-left:2px solid var(--honey);display:flex;align-items:center;gap:8px}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:2.5rem 1.5rem}
+  .intro-sections{padding:0 1.5rem 4rem}
+  #p-reference,#p-about{padding:2rem 1.5rem}
+  .cards-3,.shape-compare-grid{grid-template-columns:1fr}
+  .sim-layout{grid-template-columns:1fr}
+  .summary-cards{grid-template-columns:repeat(2,1fr)}
+  .cells-grid{grid-template-columns:1fr!important}
+  .examples-grid,.app-grid,.about-grid{grid-template-columns:1fr}
+  .dt-panels{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Hex background grid canvas -->
+<canvas id="hexBg"></canvas>
+
+<nav>
+  <div class="nav-logo"><span class="nav-logo-hex"></span>Hexamorph</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('intro',this)">Introduction</button>
+    <button class="nav-btn" onclick="showPage('reference',this)">Reference</button>
+    <button class="nav-btn" onclick="showPage('sim',this)">Live Simulation</button>
+    <button class="nav-btn" onclick="showPage('about',this)">About &amp; Sources</button>
+    <button class="nav-btn" onclick="showPage('droptest',this)">⬡ Drop Test</button>
+  </div>
+</nav>
+
+<!-- ===== PAGE 1: INTRO ===== -->
+<div class="page active" id="p-intro">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow anim anim-d1">Biomimicry in structural engineering</div>
+      <h1 class="hero-h1 anim anim-d2">Nature solved the <em>packing problem</em> 40 million years ago</h1>
+      <p class="hero-p anim anim-d3">Honeybees, with brains the size of sesame seeds, build structures that outperform human engineering in material efficiency, load distribution, and weight-to-strength ratio. The hexagon is not an accident — it is the mathematical optimum.</p>
+      <button class="hero-cta anim anim-d4" onclick="showPage('sim',document.querySelectorAll('.nav-btn')[2])">
+        <span style="position:relative;z-index:1;display:flex;align-items:center;gap:8px">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polygon points="3,1 13,7 3,13" fill="currentColor"/></svg>
+          Open simulator
+        </span>
+      </button>
+    </div>
+    <div class="hero-hex-bg anim anim-d2">
+      <canvas id="heroCanvas" width="460" height="420"></canvas>
+    </div>
+  </div>
+
+  <div class="intro-sections">
+    <div class="section-block reveal">
+      <div class="section-eyebrow">What is biomimicry?</div>
+      <h2 class="section-h2">Learning from 3.8 billion years of R&D</h2>
+      <p class="section-p">Biomimicry is the practice of studying and emulating nature's strategies, forms, and processes to solve human design challenges. Nature has been running experiments for billions of years — every surviving organism represents a solution that works.</p>
+      <p class="section-p">The word comes from the Greek <em>bios</em> (life) and <em>mimesis</em> (imitation). Coined in its modern scientific sense by Janine Benyus in her 1997 book, biomimicry has since become a formal engineering discipline used by aerospace companies, architects, materials scientists, and product designers.</p>
+      <div class="cards-3">
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l2.1 4.3 4.7.7-3.4 3.3.8 4.7L9 12.5l-4.2 2.5.8-4.7L2.2 7l4.7-.7z" stroke="#E5A030" stroke-width="1.4" fill="none"/></svg>
+          </div>
+          <div class="info-card-title">Structural biomimicry</div>
+          <div class="info-card-p">Copying the physical geometry of natural forms — like the hexagonal honeycomb — to achieve superior mechanical properties in man-made structures.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#E5A030" stroke-width="1.4"/><path d="M9 5v4l3 2" stroke="#E5A030" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="info-card-title">Process biomimicry</div>
+          <div class="info-card-p">Emulating the processes nature uses — like self-assembly, self-healing, or adaptive growth — to create materials and systems that behave more like living organisms.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2.5" y="2.5" width="5.5" height="5.5" rx="1" stroke="#E5A030" stroke-width="1.4"/><rect x="10" y="2.5" width="5.5" height="5.5" rx="1" stroke="#E5A030" stroke-width="1.4"/><rect x="2.5" y="10" width="5.5" height="5.5" rx="1" stroke="#E5A030" stroke-width="1.4"/><rect x="10" y="10" width="5.5" height="5.5" rx="1" stroke="#E5A030" stroke-width="1.4"/></svg>
+          </div>
+          <div class="info-card-title">Ecosystem biomimicry</div>
+          <div class="info-card-p">Designing systems that mimic the circular, waste-free logic of ecosystems — where the output of one process becomes the input of another. The foundation of circular economy thinking.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block reveal">
+      <div class="section-eyebrow">The hexagon theorem</div>
+      <h2 class="section-h2">Why hexagons? The mathematics of optimality</h2>
+      <p class="section-p">The honeycomb conjecture — that hexagons are the most efficient way to tile a plane — was first proposed by the Roman scholar Marcus Terentius Varro around 36 BCE. It remained unproven for over 2,000 years until mathematician Thomas Hales formally proved it in 1999.</p>
+      <div class="quote-block">
+        <div class="quote-text">"The bees have somehow found out that the hexagon is greater than the square and the triangle, and will hold more honey for the same expenditure of material."</div>
+        <div class="quote-attr">— Pappus of Alexandria, 4th century AD, Collection Book V</div>
+      </div>
+      <p class="section-p">Three shapes — squares, triangles, and hexagons — can tile a plane with no gaps. Of these, hexagons have the lowest perimeter-to-area ratio (3.72 vs 4.00 for squares vs 4.56 for triangles). Bees use 40% less wax to build the same storage volume with hexagonal cells.</p>
+    </div>
+
+    <div class="section-block reveal">
+      <div class="section-eyebrow">Historical timeline</div>
+      <h2 class="section-h2">From beehive to Boeing</h2>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-year">~36 BCE</div><div class="timeline-title">Varro's conjecture</div><div class="timeline-desc">Roman polymath Varro records that bees use hexagonal cells, suggesting a connection to geometric efficiency.</div></div>
+        <div class="timeline-item"><div class="timeline-year">1638</div><div class="timeline-title">Descartes' observation</div><div class="timeline-desc">René Descartes notes that the hexagonal structure of honeycombs minimises wax — an early connection between geometry and material economy.</div></div>
+        <div class="timeline-item"><div class="timeline-year">1944</div><div class="timeline-title">Aerospace sandwich panels</div><div class="timeline-desc">The de Havilland Mosquito uses early honeycomb core sandwich panels in control surfaces — the first engineered use of the hexagonal lattice in aerospace.</div></div>
+        <div class="timeline-item"><div class="timeline-year">1999</div><div class="timeline-title">Hales proves the conjecture</div><div class="timeline-desc">Thomas Hales publishes a computer-assisted proof of the honeycomb conjecture, mathematically establishing hexagons as the optimal tiling solution after 2,000 years.</div></div>
+        <div class="timeline-item"><div class="timeline-year">2011</div><div class="timeline-title">Graphene — the ultimate honeycomb</div><div class="timeline-desc">Single-layer graphene (a hexagonal carbon lattice) is confirmed as the strongest material ever measured — 200× stronger than steel at atomic scale.</div></div>
+      </div>
+    </div>
+
+    <div class="section-block reveal">
+      <div class="section-eyebrow">Real-world examples</div>
+      <h2 class="section-h2">Where the hexagon lives today</h2>
+      <div class="examples-grid">
+        <div class="example-card"><div class="example-num">01</div><div><div class="example-content-title">James Webb Space Telescope</div><div class="example-content-p">18 hexagonal beryllium mirror segments tile perfectly into a 6.5m aperture. Hexagonal packing maximises light-collecting area and enables the mirror to fold for launch.</div></div></div>
+        <div class="example-card"><div class="example-num">02</div><div><div class="example-content-title">Boeing 787 Dreamliner</div><div class="example-content-p">Over 50% of the aircraft structure by weight uses CFRP honeycomb sandwich panels — delivering 85% weight savings over solid aluminium equivalents.</div></div></div>
+        <div class="example-card"><div class="example-num">03</div><div><div class="example-content-title">Motorcycle & cycle helmets</div><div class="example-content-p">Koroyd co-polymer honeycomb cores deliver 30% better energy management than EPS foam at equivalent weight, used in MIPS-equipped helmets.</div></div></div>
+        <div class="example-card"><div class="example-num">04</div><div><div class="example-content-title">Morpheus Hotel, Macau</div><div class="example-content-p">The world's first free-form high-rise exoskeleton uses hexagonal structural loops — no internal columns in the structure, saving 2,200 tonnes of steel.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 2: REFERENCE ===== -->
+<div class="page" id="p-reference">
+  <div class="ref-header anim anim-d1">
+    <div class="section-eyebrow">Technical reference</div>
+    <h2 class="section-h2">Geometry, mathematics &amp; material data</h2>
+  </div>
+  <div class="ref-tabs">
+    <button class="ref-tab active" onclick="showRefTab('shapes',this)">Shape comparison</button>
+    <button class="ref-tab" onclick="showRefTab('math',this)">Mathematics</button>
+    <button class="ref-tab" onclick="showRefTab('materials',this)">Material data</button>
+    <button class="ref-tab" onclick="showRefTab('applications',this)">Applications</button>
+  </div>
+
+  <div class="ref-content active" id="rt-shapes">
+    <div class="shape-compare-grid" id="shapeRefGrid"></div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Shape</th><th>Sides</th><th>Interior angle</th><th>Perimeter/area ratio</th><th>Tiling gap</th><th>Wall material vs hex</th><th>Load isotropy</th><th>Best use</th></tr></thead>
+        <tbody>
+          <tr class="highlight"><td>Hexagon</td><td>6</td><td>120°</td><td>3.72</td><td>0%</td><td>1.00× baseline</td><td>★★★★★</td><td>Panels, cores, energy absorbers</td></tr>
+          <tr><td>Square</td><td>4</td><td>90°</td><td>4.00</td><td>0%</td><td>1.37×</td><td>★★☆☆☆</td><td>Grid frames, simple tiling</td></tr>
+          <tr><td>Triangle</td><td>3</td><td>60°</td><td>4.56</td><td>0%</td><td>1.87×</td><td>★★★☆☆</td><td>Rigid trusses, shear webs</td></tr>
+          <tr><td>Circle</td><td>∞</td><td>360°</td><td>3.54*</td><td>21%</td><td>N/A</td><td>★★☆☆☆</td><td>Pipes, pressure vessels</td></tr>
+          <tr><td>Pentagon</td><td>5</td><td>108°</td><td>3.81</td><td>~26%</td><td>N/A</td><td>★★★☆☆</td><td>Dome structures</td></tr>
+          <tr><td>Octagon</td><td>8</td><td>135°</td><td>3.66</td><td>~15%</td><td>1.20×</td><td>★★★★☆</td><td>Architectural panels</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-content" id="rt-math">
+    <div class="math-section"><div class="math-title">Isoperimetric inequality (2D)</div><div class="math-formula">4π A ≤ L²</div><div class="math-p">For any closed curve of length L enclosing area A, equality holds only for a circle. This is why circles have the lowest perimeter-to-area ratio — but circles cannot tile the plane without gaps.</div></div>
+    <div class="math-section"><div class="math-title">Honeycomb conjecture (Hales, 1999)</div><div class="math-formula">P(hex) = 2^(½) · 3^(¼) · A^(½)</div><div class="math-p">Among all tilings of the plane by regions of equal area A, the regular hexagonal tiling has the minimum total perimeter per unit cell.</div></div>
+    <div class="math-section"><div class="math-title">Relative density of honeycomb core</div><div class="math-formula">ρ*/ρₛ = (2/√3)(t/l)</div><div class="math-p">Where ρ* is the honeycomb density, ρₛ is solid wall material density, t is wall thickness, and l is cell edge length. This expresses how much lighter a honeycomb core is than a solid block of the same material.</div></div>
+    <div class="math-section"><div class="math-title">In-plane stiffness (Gibson &amp; Ashby)</div><div class="math-formula">E₁/Eₛ = (t/l)³ · cos θ / (sin²θ · (1+sin θ))</div><div class="math-p">For a regular hexagon (θ = 30°), E₁ = E₂ (isotropic in-plane). Doubling wall thickness increases stiffness eightfold.</div></div>
+  </div>
+
+  <div class="ref-content" id="rt-materials">
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Material</th><th>Young's modulus</th><th>Density</th><th>Tensile strength</th><th>Typical use</th><th>Efficiency</th></tr></thead>
+        <tbody>
+          <tr><td>Aluminium 5052</td><td>70 GPa</td><td>2700 kg/m³</td><td>230 MPa</td><td>Aerospace panels</td><td>High</td></tr>
+          <tr><td>Steel (mild)</td><td>200 GPa</td><td>7800 kg/m³</td><td>400 MPa</td><td>Heavy structural</td><td>Medium</td></tr>
+          <tr><td>Carbon fibre CFRP</td><td>135 GPa</td><td>1600 kg/m³</td><td>1500 MPa</td><td>Racing, aerospace</td><td>Very high</td></tr>
+          <tr class="highlight"><td>Natural wax (bee)</td><td>0.05 GPa</td><td>900 kg/m³</td><td>1.4 MPa</td><td>Honey storage</td><td>Maximum (nature)</td></tr>
+          <tr><td>Titanium 6Al-4V</td><td>114 GPa</td><td>4430 kg/m³</td><td>950 MPa</td><td>High-temp aerospace</td><td>High</td></tr>
+          <tr><td>Graphene (single)</td><td>1000 GPa</td><td>2200 kg/m³</td><td>130,000 MPa</td><td>Experimental nano</td><td>Ultimate</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-content" id="rt-applications">
+    <div class="app-grid">
+      <div class="app-card"><div class="app-card-industry">Aerospace</div><div class="app-card-title">Commercial aircraft floor panels</div><div class="app-card-p">Aluminium 5052 honeycomb core bonded between CFRP face sheets. Typical panel: 25mm thick, 1.8 kg/m², withstands 5 kN/m² distributed load.</div><div class="app-card-stat">Weight saving vs solid Al: ~85% | Boeing 787: 50% of structure by weight is composites with honeycomb cores</div></div>
+      <div class="app-card"><div class="app-card-industry">Automotive</div><div class="app-card-title">Crash energy absorbers</div><div class="app-card-p">Hexagonal aluminium crush cans in front crumple zones. Progressive cell wall buckling absorbs kinetic energy through stable, predictable collapse.</div><div class="app-card-stat">Energy absorption: 40–60 kJ/kg vs 15–25 kJ/kg for solid aluminium</div></div>
+      <div class="app-card"><div class="app-card-industry">Space</div><div class="app-card-title">JWST mirror segments</div><div class="app-card-p">18 hexagonal beryllium segments, each 1.32m across and 20kg. Hexagonal packing maximises aperture within the 6.5m diameter.</div><div class="app-card-stat">Total collecting area: 25.4 m² | Surface accuracy: ±1.5 nm RMS</div></div>
+      <div class="app-card"><div class="app-card-industry">Architecture</div><div class="app-card-title">Structural facade systems</div><div class="app-card-p">The Morpheus Hotel uses a free-form exoskeleton with hexagonal structural loops — the world's first free-form high-rise exoskeleton with no internal columns.</div><div class="app-card-stat">Steel used: 2,300 tonnes | vs ~4,500 tonnes for conventional frame</div></div>
+      <div class="app-card"><div class="app-card-industry">Materials Science</div><div class="app-card-title">Graphene &amp; 2D hexagonal lattices</div><div class="app-card-p">Graphene's honeycomb carbon lattice (bond length 0.142nm) is the strongest material ever measured. ~200× stronger than steel at atomic scale.</div><div class="app-card-stat">Tensile strength: 130 GPa | Young's modulus: ~1 TPa</div></div>
+      <div class="app-card"><div class="app-card-industry">Protective equipment</div><div class="app-card-title">Helmets and body armour</div><div class="app-card-p">Koroyd co-polymer honeycomb cores in ski/cycle helmets deliver 30% better energy management than EPS at equivalent weight.</div><div class="app-card-stat">MIPS + Koroyd helmets reduce rotational acceleration by ~25% vs standard EPS</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 3: SIMULATOR ===== -->
+<div class="page" id="p-sim">
+  <div class="sim-layout">
+    <div class="sim-controls">
+      <div class="ctrl-section">
+        <div class="ctrl-section-title">Shapes</div>
+        <div class="shape-toggles" id="simShapeToggles"></div>
+      </div>
+      <div class="ctrl-section">
+        <div class="ctrl-section-title">Load type</div>
+        <div class="load-btns" id="simLoadBtns">
+          <div class="load-btn on" data-lt="compression">
+            <svg class="load-icon" viewBox="0 0 14 14" fill="none"><line x1="7" y1="1" x2="7" y2="5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><polyline points="5,4 7,6 9,4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><line x1="7" y1="9" x2="7" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><polyline points="5,10 7,8 9,10" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            Compression
+          </div>
+          <div class="load-btn" data-lt="shear">
+            <svg class="load-icon" viewBox="0 0 14 14" fill="none"><line x1="1" y1="4" x2="13" y2="4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><polyline points="11,2 13,4 11,6" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><line x1="1" y1="10" x2="13" y2="10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><polyline points="3,8 1,10 3,12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            Shear
+          </div>
+          <div class="load-btn" data-lt="bending">
+            <svg class="load-icon" viewBox="0 0 14 14" fill="none"><path d="M1 10 Q7 2 13 10" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><line x1="7" y1="1" x2="7" y2="5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Bending
+          </div>
+          <div class="load-btn" data-lt="impact">
+            <svg class="load-icon" viewBox="0 0 14 14" fill="none"><path d="M3 1l2 5H1zm6 0l2 5H7zM7 7v6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Impact
+          </div>
+          <div class="load-btn" data-lt="tension">
+            <svg class="load-icon" viewBox="0 0 14 14" fill="none"><line x1="7" y1="1" x2="7" y2="5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><polyline points="5,2 7,0 9,2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><line x1="7" y1="9" x2="7" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><polyline points="5,12 7,14 9,12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            Tension
+          </div>
+        </div>
+      </div>
+      <div class="ctrl-section">
+        <div class="ctrl-section-title">Parameters</div>
+        <div class="ctrl-row"><div class="ctrl-lbl">Force <span id="sv-force">100 kN</span></div><input type="range" id="sv-force-slider" min="1" max="500" step="1" value="100"></div>
+        <div class="ctrl-row"><div class="ctrl-lbl">Wall thickness <span id="sv-thick">2.0 mm</span></div><input type="range" id="sv-thick-slider" min="0.5" max="10" step="0.5" value="2"></div>
+        <div class="ctrl-row"><div class="ctrl-lbl">Cell size <span id="sv-size">25 mm</span></div><input type="range" id="sv-size-slider" min="5" max="80" step="1" value="25"></div>
+        <div class="ctrl-row"><div class="ctrl-lbl">Material</div><select id="sv-mat"><option value="70">Aluminium alloy (70 GPa)</option><option value="200">Steel (200 GPa)</option><option value="135">Carbon fibre (135 GPa)</option><option value="69">Glass fibre (69 GPa)</option><option value="3">Polymer / ABS (3 GPa)</option><option value="12">Timber (12 GPa)</option><option value="30">Concrete (30 GPa)</option><option value="1000">Graphene (1000 GPa)</option></select></div>
+      </div>
+    </div>
+    <div class="sim-main">
+      <div class="summary-cards" id="simSummary"></div>
+      <div class="viz-panel">
+        <div class="viz-panel-title">Live cell deformation &amp; stress heatmap</div>
+        <div class="cells-grid" id="simCellsGrid"></div>
+      </div>
+      <div class="verdict" id="simVerdict"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 5: DROP TEST ===== -->
+<div class="page" id="p-droptest">
+  <div class="dt-header anim anim-d1">
+    <div class="section-eyebrow">Impact simulation</div>
+    <h2 class="section-h2">Drop Test — Full 6-Shape Impact Analysis</h2>
+    <p class="section-p" style="margin-top:.5rem;margin-bottom:0">A weighted object is dropped onto a structural base sheet made from each geometry. Watch real-time deformation, crack propagation, and energy absorption across all six tiling patterns.</p>
+  </div>
+
+  <div class="dt-controls anim anim-d2">
+    <div class="dt-ctrl-group">
+      <div class="dt-ctrl-lbl">Drop weight <span id="dtWtLbl">5 kg</span></div>
+      <input type="range" id="dtWt" min="1" max="50" step="1" value="5">
+    </div>
+    <div class="dt-ctrl-group">
+      <div class="dt-ctrl-lbl">Drop height <span id="dtHtLbl">1.0 m</span></div>
+      <input type="range" id="dtHt" min="0.2" max="5.0" step="0.1" value="1.0">
+    </div>
+    <div class="dt-ctrl-group">
+      <div class="dt-ctrl-lbl">Sheet thickness <span id="dtThkLbl">2 mm</span></div>
+      <input type="range" id="dtThk" min="1" max="10" step="0.5" value="2">
+    </div>
+    <div class="dt-ctrl-group" style="min-width:180px">
+      <div class="dt-ctrl-lbl">Drop angle <span id="dtAngleLbl">0°</span></div>
+      <input type="range" id="dtAngle" min="0" max="75" step="5" value="0">
+      <canvas class="dt-angle-vis" id="dtAngleVis" height="36"></canvas>
+    </div>
+    <div class="dt-ctrl-group">
+      <div class="dt-ctrl-lbl">Material</div>
+      <select id="dtMat">
+        <option value="70,2700,230">Aluminium alloy (70 GPa)</option>
+        <option value="200,7800,400">Steel (200 GPa)</option>
+        <option value="135,1600,1500">Carbon fibre CFRP (135 GPa)</option>
+        <option value="3,1050,45">Polymer / ABS (3 GPa)</option>
+        <option value="12,600,40">Timber (12 GPa)</option>
+      </select>
+    </div>
+    <button class="dt-drop-btn" id="dtBtn" onclick="runDropTest()">
+      <span>⬡ DROP</span>
+    </button>
+  </div>
+
+  <div class="dt-legend">
+    <div class="dt-leg-item"><div class="dt-leg-dot" style="background:#E5A030"></div>No stress</div>
+    <div class="dt-leg-item"><div class="dt-leg-dot" style="background:#C8853A"></div>Medium stress</div>
+    <div class="dt-leg-item"><div class="dt-leg-dot" style="background:#C0473A"></div>High stress / crack</div>
+    <div class="dt-leg-item"><div class="dt-leg-dot" style="background:#9B7DD4"></div>Impact zone</div>
+    <div class="dt-leg-item" style="margin-left:auto;font-size:11px;color:var(--text3)" id="dtEnergyInfo"></div>
+  </div>
+
+  <!-- Row 1: Primary tilers -->
+  <div class="dt-row-label">⬡ Perfect Tiling Geometries</div>
+  <div class="dt-panels" id="dtPanelsRow1">
+    <div class="dt-panel" id="dtp-hexagon">
+      <div class="dt-panel-head"><span class="dt-panel-name" style="color:#E5A030">⬡ Hexagon</span><span class="dt-panel-badge" id="dtb-hexagon" style="background:rgba(229,160,48,0.12);color:#E5A030">Ready</span></div>
+      <div class="dt-canvas-wrap" style="height:230px"><canvas id="dtc-hexagon"></canvas><div class="dt-phase-indicator" id="dtp-ind-hexagon" style="display:none"></div></div>
+      <div class="dt-stats" id="dts-hexagon">
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Peak deformation</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Energy absorbed</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Safety factor</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Verdict</div><div class="dt-stat-val">—</div></div>
+      </div>
+      <div class="dt-impact-bar-wrap"><div class="dt-impact-bar-lbl"><span>Structural integrity</span><span id="dti-hexagon">100%</span></div><div class="dt-impact-track"><div class="dt-impact-fill" id="dtf-hexagon" style="width:100%;background:#E5A030"></div></div></div>
+    </div>
+    <div class="dt-panel" id="dtp-triangle">
+      <div class="dt-panel-head"><span class="dt-panel-name" style="color:#9B7DD4">▲ Triangle</span><span class="dt-panel-badge" id="dtb-triangle" style="background:rgba(155,125,212,0.12);color:#9B7DD4">Ready</span></div>
+      <div class="dt-canvas-wrap" style="height:230px"><canvas id="dtc-triangle"></canvas><div class="dt-phase-indicator" id="dtp-ind-triangle" style="display:none"></div></div>
+      <div class="dt-stats" id="dts-triangle">
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Peak deformation</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Energy absorbed</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Safety factor</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Verdict</div><div class="dt-stat-val">—</div></div>
+      </div>
+      <div class="dt-impact-bar-wrap"><div class="dt-impact-bar-lbl"><span>Structural integrity</span><span id="dti-triangle">100%</span></div><div class="dt-impact-track"><div class="dt-impact-fill" id="dtf-triangle" style="width:100%;background:#E5A030"></div></div></div>
+    </div>
+    <div class="dt-panel" id="dtp-square">
+      <div class="dt-panel-head"><span class="dt-panel-name" style="color:#5B8FBF">■ Square</span><span class="dt-panel-badge" id="dtb-square" style="background:rgba(91,143,191,0.12);color:#5B8FBF">Ready</span></div>
+      <div class="dt-canvas-wrap" style="height:230px"><canvas id="dtc-square"></canvas><div class="dt-phase-indicator" id="dtp-ind-square" style="display:none"></div></div>
+      <div class="dt-stats" id="dts-square">
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Peak deformation</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Energy absorbed</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Safety factor</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Verdict</div><div class="dt-stat-val">—</div></div>
+      </div>
+      <div class="dt-impact-bar-wrap"><div class="dt-impact-bar-lbl"><span>Structural integrity</span><span id="dti-square">100%</span></div><div class="dt-impact-track"><div class="dt-impact-fill" id="dtf-square" style="width:100%;background:#E5A030"></div></div></div>
+    </div>
+  </div>
+
+  <!-- Row 2: Gapped / near-tilers -->
+  <div class="dt-row-label" style="margin-top:1.5rem">◉ Curved &amp; Hybrid Geometries</div>
+  <div class="dt-panels" id="dtPanelsRow2">
+    <div class="dt-panel" id="dtp-circle">
+      <div class="dt-panel-head"><span class="dt-panel-name" style="color:#C0473A">● Circle</span><span class="dt-panel-badge" id="dtb-circle" style="background:rgba(192,71,58,0.12);color:#C0473A">Ready</span></div>
+      <div class="dt-canvas-wrap" style="height:230px"><canvas id="dtc-circle"></canvas><div class="dt-phase-indicator" id="dtp-ind-circle" style="display:none"></div></div>
+      <div class="dt-stats" id="dts-circle">
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Peak deformation</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Energy absorbed</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Safety factor</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Verdict</div><div class="dt-stat-val">—</div></div>
+      </div>
+      <div class="dt-impact-bar-wrap"><div class="dt-impact-bar-lbl"><span>Structural integrity</span><span id="dti-circle">100%</span></div><div class="dt-impact-track"><div class="dt-impact-fill" id="dtf-circle" style="width:100%;background:#E5A030"></div></div></div>
+    </div>
+    <div class="dt-panel" id="dtp-pentagon">
+      <div class="dt-panel-head"><span class="dt-panel-name" style="color:#C8853A">⬠ Pentagon</span><span class="dt-panel-badge" id="dtb-pentagon" style="background:rgba(200,133,58,0.12);color:#C8853A">Ready</span></div>
+      <div class="dt-canvas-wrap" style="height:230px"><canvas id="dtc-pentagon"></canvas><div class="dt-phase-indicator" id="dtp-ind-pentagon" style="display:none"></div></div>
+      <div class="dt-stats" id="dts-pentagon">
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Peak deformation</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Energy absorbed</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Safety factor</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Verdict</div><div class="dt-stat-val">—</div></div>
+      </div>
+      <div class="dt-impact-bar-wrap"><div class="dt-impact-bar-lbl"><span>Structural integrity</span><span id="dti-pentagon">100%</span></div><div class="dt-impact-track"><div class="dt-impact-fill" id="dtf-pentagon" style="width:100%;background:#E5A030"></div></div></div>
+    </div>
+    <div class="dt-panel" id="dtp-octagon">
+      <div class="dt-panel-head"><span class="dt-panel-name" style="color:#4A9A6E">⯃ Octagon</span><span class="dt-panel-badge" id="dtb-octagon" style="background:rgba(74,154,110,0.12);color:#4A9A6E">Ready</span></div>
+      <div class="dt-canvas-wrap" style="height:230px"><canvas id="dtc-octagon"></canvas><div class="dt-phase-indicator" id="dtp-ind-octagon" style="display:none"></div></div>
+      <div class="dt-stats" id="dts-octagon">
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Peak deformation</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Energy absorbed</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Safety factor</div><div class="dt-stat-val">—</div></div>
+        <div class="dt-stat-row"><div class="dt-stat-lbl">Verdict</div><div class="dt-stat-val">—</div></div>
+      </div>
+      <div class="dt-impact-bar-wrap"><div class="dt-impact-bar-lbl"><span>Structural integrity</span><span id="dti-octagon">100%</span></div><div class="dt-impact-track"><div class="dt-impact-fill" id="dtf-octagon" style="width:100%;background:#E5A030"></div></div></div>
+    </div>
+  </div>
+
+  <div class="dt-summary" id="dtSummary" style="margin-top:1rem">
+    Adjust the parameters above and press <strong>⬡ DROP</strong> to run the impact simulation across all six geometries simultaneously.
+  </div>
+</div>
+
+<!-- ===== PAGE 4: ABOUT ===== -->
+<div class="page" id="p-about">
+  <div class="about-hero anim anim-d1">
+    <div class="section-eyebrow">About this project</div>
+    <h2 class="section-h2">A visual model for understanding structural biomimicry</h2>
+    <p class="section-p" style="margin-top:.75rem">This interactive tool was built to demonstrate how nature's hexagonal geometry outperforms other tessellation patterns across structural engineering metrics. The simulation uses simplified continuum mechanics models derived from Gibson &amp; Ashby's seminal work on cellular materials.</p>
+  </div>
+  <div class="about-grid">
+    <div>
+      <div class="about-block-title">How the simulation works</div>
+      <p class="about-p">The load response models are based on the relative density theory of cellular solids. For each shape, structural factors are derived from the cell geometry: interior angle, wall count, and packing efficiency.</p>
+      <p class="about-p">The drop test uses simplified impact mechanics — kinetic energy at impact is computed from weight × g × height. Each shape's absorption capacity scales with material properties, wall thickness, and cell geometry impact factor.</p>
+      <p class="about-p">The angle control shifts the impact centroid laterally, amplifying asymmetric stress on cells less aligned with the force vector — revealing how each geometry handles off-axis loading differently.</p>
+    </div>
+    <div>
+      <div class="about-block-title">Key sources &amp; references</div>
+      <ul class="sources-list">
+        <li><strong>Gibson &amp; Ashby — Cellular Solids (1997)</strong>The foundational textbook on the mechanics of honeycombs and foams. The relative density models used here are derived from Chapter 4.</li>
+        <li><strong>Hales, T.C. — The Honeycomb Conjecture (1999)</strong>The formal mathematical proof that regular hexagonal tiling minimises perimeter for equal-area cells.</li>
+        <li><strong>Benyus, J.M. — Biomimicry (1997)</strong>The book that coined the modern term and established biomimicry as a design discipline.</li>
+      </ul>
+    </div>
+  </div>
+  <div>
+    <div class="about-block-title" style="margin-bottom:1rem">Topics covered in this tool</div>
+    <div class="tag-row">
+      <span class="tag">Honeycomb geometry</span><span class="tag">Biomimicry</span><span class="tag">Structural engineering</span><span class="tag">Impact mechanics</span><span class="tag">Cellular solids</span><span class="tag">Material efficiency</span><span class="tag">Tessellation</span><span class="tag">Energy absorption</span><span class="tag">Non-pneumatic tires</span><span class="tag">Aerospace panels</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================================================
+// NAVIGATION
+// ===================================================
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('p-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'sim') initSim();
+  if (id === 'reference') initRef();
+  window.scrollTo(0, 0);
+}
+
+function showRefTab(id, btn) {
+  document.querySelectorAll('.ref-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.ref-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('rt-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ===================================================
+// ANIMATED HEX BACKGROUND
+// ===================================================
+(function initHexBg() {
+  const cv = document.getElementById('hexBg');
+  const ctx = cv.getContext('2d');
+  let mouse = { x: -999, y: -999 };
+  let t = 0;
+
+  function resize() {
+    cv.width = window.innerWidth;
+    cv.height = window.innerHeight;
+  }
+
+  function drawHexBg() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    const r = 32;
+    const hx = r * Math.sqrt(3);
+    const hy = r * 1.5;
+    const cols = Math.ceil(cv.width / hx) + 2;
+    const rows = Math.ceil(cv.height / hy) + 2;
+    t += 0.008;
+
+    for (let row = -1; row < rows; row++) {
+      for (let col = -1; col < cols; col++) {
+        const cx = col * hx + (row % 2 === 0 ? 0 : hx / 2);
+        const cy = row * hy;
+        const dx = cx - mouse.x, dy = cy - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const proximity = Math.max(0, 1 - dist / 200);
+        const wave = Math.sin(t + col * 0.3 + row * 0.2) * 0.4 + 0.6;
+        const alpha = 0.04 + proximity * 0.12 + wave * 0.02;
+        const strokeA = 0.08 + proximity * 0.22 + wave * 0.03;
+
+        ctx.beginPath();
+        for (let i = 0; i < 6; i++) {
+          const a = -Math.PI / 6 + Math.PI / 3 * i;
+          const px = cx + (r - 1) * Math.cos(a);
+          const py = cy + (r - 1) * Math.sin(a);
+          i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.fillStyle = `rgba(200,133,58,${alpha})`;
+        ctx.fill();
+        ctx.strokeStyle = `rgba(200,133,58,${strokeA})`;
+        ctx.lineWidth = proximity > 0.1 ? 1.5 : 0.5;
+        ctx.stroke();
+      }
+    }
+    requestAnimationFrame(drawHexBg);
+  }
+
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  window.addEventListener('resize', resize);
+  resize();
+  drawHexBg();
+})();
+
+// ===================================================
+// HERO CANVAS
+// ===================================================
+(function initHeroCanvas() {
+  const cv = document.getElementById('heroCanvas');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  let t = 0;
+
+  function drawHex(cx, cy, r, phase, alpha) {
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = -Math.PI / 6 + Math.PI / 3 * i;
+      const px = cx + r * Math.cos(a);
+      const py = cy + r * Math.sin(a);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    const pulse = (Math.sin(t * 1.2 + phase) + 1) * 0.5;
+    ctx.strokeStyle = `rgba(229,160,48,${alpha * (0.5 + pulse * 0.5)})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = `rgba(200,133,58,${0.04 + pulse * 0.06})`;
+    ctx.fill();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    t += 0.02;
+    // Cluster of hexagons radiating out
+    const positions = [
+      [230, 210, 70, 0, 1.0],
+      [110, 175, 55, 1, 0.7],
+      [350, 175, 55, 2, 0.7],
+      [230, 85, 55, 3, 0.7],
+      [230, 335, 55, 4, 0.7],
+      [50, 260, 40, 5, 0.4],
+      [410, 260, 40, 6, 0.4],
+      [130, 90, 38, 7, 0.3],
+      [370, 90, 38, 8, 0.3],
+      [350, 330, 38, 9, 0.3],
+      [110, 330, 38, 10, 0.3],
+    ];
+    positions.forEach(([cx, cy, r, ph, a]) => drawHex(cx, cy, r, ph, a));
+
+    // Center glow
+    const g = ctx.createRadialGradient(230, 210, 10, 230, 210, 100);
+    g.addColorStop(0, 'rgba(245,207,90,0.15)');
+    g.addColorStop(1, 'rgba(245,207,90,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, cv.width, cv.height);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ===================================================
+// SCROLL REVEAL
+// ===================================================
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ===================================================
+// REFERENCE PAGE SHAPE CARDS
+// ===================================================
+const SHAPE_DEFS = {
+  hexagon: { name:'Hexagon', sides:6, ao:-Math.PI/6, color:'#E5A030', props:{ 'Space eff':['100%','#E5A030',1], 'Mat. savings':['Best',  '#E5A030',1], 'Structural':['Excellent','#E5A030',1], 'Tiling gap':['0%','#E5A030',1] }, badge:{t:'Best',bg:'rgba(229,160,48,0.15)',c:'#E5A030'} },
+  square:  { name:'Square',  sides:4, ao:Math.PI/4,  color:'#5B8FBF', props:{ 'Space eff':['Good','#5B8FBF',0.7], 'Mat. savings':['Moderate','#5B8FBF',0.5], 'Structural':['Moderate','#5B8FBF',0.6], 'Tiling gap':['0%','#5B8FBF',0.7] }, badge:{t:'Good',bg:'rgba(91,143,191,0.12)',c:'#5B8FBF'} },
+  triangle:{ name:'Triangle',sides:3, ao:-Math.PI/2,  color:'#9B7DD4', props:{ 'Space eff':['Good','#9B7DD4',0.7], 'Mat. savings':['Low','#C0473A',0.25], 'Structural':['Very strong','#9B7DD4',0.9], 'Tiling gap':['0%','#9B7DD4',0.7] }, badge:{t:'Strong',bg:'rgba(155,125,212,0.12)',c:'#9B7DD4'} },
+  circle:  { name:'Circle',  sides:0, ao:0,            color:'#C0473A', props:{ 'Space eff':['79%','#C0473A',0.4], 'Mat. savings':['N/A (gaps)','#C0473A',0.2], 'Structural':['Weak','#C0473A',0.3], 'Tiling gap':['21%','#C0473A',0.3] }, badge:{t:'Poor',bg:'rgba(192,71,58,0.12)',c:'#C0473A'} },
+  pentagon:{ name:'Pentagon',sides:5, ao:-Math.PI/2,  color:'#C8853A', props:{ 'Space eff':['74%','#C8853A',0.5], 'Mat. savings':['Low (gaps)','#C8853A',0.35], 'Structural':['Moderate','#C8853A',0.55], 'Tiling gap':['26%','#C8853A',0.3] }, badge:{t:'Moderate',bg:'rgba(200,133,58,0.12)',c:'#C8853A'} },
+  octagon: { name:'Octagon', sides:8, ao:Math.PI/8,   color:'#4A9A6E', props:{ 'Space eff':['85%','#4A9A6E',0.8], 'Mat. savings':['Good','#4A9A6E',0.75], 'Structural':['Strong','#4A9A6E',0.8], 'Tiling gap':['15%','#4A9A6E',0.6] }, badge:{t:'Good',bg:'rgba(74,154,110,0.12)',c:'#4A9A6E'} },
+};
+
+function initRef() {
+  const grid = document.getElementById('shapeRefGrid');
+  if (grid && grid.children.length === 0) {
+    grid.innerHTML = Object.entries(SHAPE_DEFS).map(([k, sd]) => {
+      const propsHtml = Object.entries(sd.props).map(([lbl, [val, col, pct]]) =>
+        `<div class="prop-row"><span class="prop-lbl">${lbl}</span><div class="prop-bar-wrap"><span class="prop-val" style="color:${col}">${val}</span><div class="prop-bar-track"><div class="prop-bar-fill" style="width:${Math.round(pct*100)}%;background:${col}"></div></div></div></div>`
+      ).join('');
+      return `<div class="shape-ref-card ${k === 'hexagon' ? 'best' : ''}">
+        <div class="shape-ref-head"><span class="shape-ref-name" style="color:${sd.color}">${sd.name}</span><span class="shape-ref-badge" style="background:${sd.badge.bg};color:${sd.badge.c}">${sd.badge.t}</span></div>
+        <div class="shape-ref-canvas"><canvas id="src-${k}" width="90" height="90"></canvas></div>
+        <div class="shape-ref-props">${propsHtml}</div>
+      </div>`;
+    }).join('');
+    Object.entries(SHAPE_DEFS).forEach(([k, sd]) => {
+      const cv = document.getElementById('src-' + k);
+      if (!cv) return;
+      const ctx = cv.getContext('2d');
+      const r = 32, cx = 45, cy = 45;
+      ctx.lineWidth = 1.5; ctx.strokeStyle = sd.color; ctx.fillStyle = sd.color + '22';
+      if (sd.sides === 0) { ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
+      else {
+        ctx.beginPath();
+        for (let i = 0; i < sd.sides; i++) { const a = sd.ao + 2 * Math.PI * i / sd.sides; i === 0 ? ctx.moveTo(cx + r * Math.cos(a), cy + r * Math.sin(a)) : ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a)); }
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+        if (k === 'hexagon') { ctx.fillStyle = sd.color; ctx.font = '10px Outfit'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('120°', cx, cy); }
+      }
+    });
+  }
+}
+
+// ===================================================
+// SIMULATOR
+// ===================================================
+const SIM_SHAPES = {
+  hexagon: { name:'Hexagon', sides:6, ao:-Math.PI/6, color:'#E5A030', f:{compression:1.00,shear:0.92,bending:0.95,impact:0.98,tension:0.90}, gap:0, iso:97 },
+  square:  { name:'Square',  sides:4, ao:Math.PI/4,  color:'#5B8FBF', f:{compression:0.72,shear:0.40,bending:0.62,impact:0.65,tension:0.78}, gap:0, iso:55 },
+  triangle:{ name:'Triangle',sides:3, ao:-Math.PI/2, color:'#9B7DD4', f:{compression:0.86,shear:0.88,bending:0.78,impact:0.74,tension:0.82}, gap:0, iso:72 },
+  circle:  { name:'Circle',  sides:0, ao:0,           color:'#C0473A', f:{compression:0.48,shear:0.35,bending:0.44,impact:0.55,tension:0.40}, gap:21, iso:60 },
+  pentagon:{ name:'Pentagon',sides:5, ao:-Math.PI/2, color:'#C8853A', f:{compression:0.65,shear:0.62,bending:0.64,impact:0.68,tension:0.60}, gap:26, iso:75 },
+  octagon: { name:'Octagon', sides:8, ao:Math.PI/8,  color:'#4A9A6E', f:{compression:0.80,shear:0.74,bending:0.76,impact:0.78,tension:0.74}, gap:15, iso:82 },
+};
+
+const VERDICTS = {
+  compression:{
+    hexagon:"Hexagons distribute vertical load equally across 3 wall families at 0°, 60°, 120°. No stress concentration at corners — the gold standard for compressive sandwich panels.",
+    square:"Square cells fail under compression due to 90° corner stress concentration acting as plastic hinges. Progressive buckling initiates at corners.",
+    triangle:"Inherently rigid — a triangle cannot distort without changing wall length. Excellent for compressive columns despite high material use.",
+    circle:"Point contacts between circles create extreme local stress. Gap zones provide no lateral support, making circular tilings ineffective under distributed compression.",
+    pentagon:"~26% gap zones break the compressive load path. Not suitable for compressive panels.",
+    octagon:"Moderate performance — angled walls help, but square-filler junctions introduce stress concentrations at every transition zone."
+  },
+  shear:{hexagon:"Wall segments at 0°, 60° and 120° give natural diagonal bracing against shear in all directions. Nearly isotropic shear stiffness.",square:"The worst for shear — all walls are horizontal or vertical, zero diagonal resistance. Immediate parallelogram distortion.",triangle:"Best pure shear-resistant tessellation. A triangle cannot distort without lengthening a side.",circle:"Contact points allow inter-cell sliding with no geometric lock. Gap zones collapse first.",pentagon:"Angled walls give moderate shear resistance but gap-zone sliding planes allow progressive inter-cell slip.",octagon:"Good shear resistance from angled faces at most orientations. Square junction zones remain the weak link."},
+  bending:{hexagon:"The aerospace standard. Hexagonal cores in sandwich panels act as efficient I-beam webs. Exceptional bending stiffness-to-weight.",square:"Lower bending stiffness per unit mass. Rectangular geometry does not efficiently resist out-of-plane moment.",triangle:"Good bending rigidity from inherent stiffness, with a weight penalty.",circle:"Gap zones create a discontinuous bending neutral axis — zero-stiffness voids cause premature delamination.",pentagon:"Gap zones act as delamination planes under bending.",octagon:"Approaches hexagonal bending performance. Used in some architectural panel systems."},
+  impact:{hexagon:"Progressive cell-wall buckling absorbs energy across the entire sheet. Impact zone remains localised. Highest structural integrity retained.",square:"Buckles suddenly at corner hinges rather than progressively. Energy absorbed in one catastrophic event.",triangle:"Rigid initially but fails abruptly once one wall fractures.",circle:"Moderate initial impact resistance from arch action, but gap zones collapse first.",pentagon:"Gap zones collapse before cells absorb significant energy.",octagon:"Some progressive failure from angled walls. Better than squares for energy absorption applications."},
+  tension:{hexagon:"Three wall families share tensile load simultaneously. Multi-directional symmetry means no single wall is critically loaded.",square:"Adequate along cell axes but critically weak at 45°. Corner stress concentrations initiate cracks.",triangle:"High wall density means many walls share tensile load simultaneously.",circle:"Load transmitted through point contacts — extreme local stress leads to rapid cell separation.",pentagon:"Gap zones act as pre-existing crack initiators under tension.",octagon:"Multiple angled contact faces provide several load paths under tension."}
+};
+
+let simSelected = new Set(['hexagon','square','triangle']);
+let simLoadType = 'compression';
+let simForce=100, simThick=2, simSize=25, simModulus=70;
+
+function initSim() {
+  const tog = document.getElementById('simShapeToggles');
+  if (tog && tog.children.length === 0) {
+    tog.innerHTML = Object.entries(SIM_SHAPES).map(([k, sd]) =>
+      `<div class="sh-tog ${simSelected.has(k)?'on':''}" data-k="${k}" style="${simSelected.has(k)?'background:'+sd.color+';color:#180E06':''}">${sd.name}</div>`
+    ).join('');
+    tog.addEventListener('click', e => {
+      const t = e.target.closest('[data-k]'); if (!t) return;
+      const k = t.dataset.k;
+      if (simSelected.has(k)) { if (simSelected.size > 1) simSelected.delete(k); }
+      else simSelected.add(k);
+      document.querySelectorAll('#simShapeToggles .sh-tog').forEach(el => {
+        const ek = el.dataset.k, on = simSelected.has(ek), sd = SIM_SHAPES[ek];
+        el.className = 'sh-tog' + (on ? ' on' : '');
+        el.style.background = on ? sd.color : ''; el.style.color = on ? '#180E06' : '';
+      });
+      updateSim();
+    });
+  }
+  document.getElementById('simLoadBtns').addEventListener('click', e => {
+    const b = e.target.closest('[data-lt]'); if (!b) return;
+    simLoadType = b.dataset.lt;
+    document.querySelectorAll('.load-btn').forEach(x => x.classList.toggle('on', x.dataset.lt === simLoadType));
+    updateSim();
+  });
+  [['sv-force-slider','sv-force',v=>`${v} kN`,v=>simForce=+v],
+   ['sv-thick-slider','sv-thick',v=>`${parseFloat(v).toFixed(1)} mm`,v=>simThick=+v],
+   ['sv-size-slider','sv-size',v=>`${v} mm`,v=>simSize=+v]].forEach(([sid,vid,fmt,set])=>{
+    const el = document.getElementById(sid);
+    if (el && !el._bound) { el._bound=true; el.addEventListener('input',e=>{set(e.target.value);document.getElementById(vid).textContent=fmt(e.target.value);updateSim();}); }
+  });
+  const matSel = document.getElementById('sv-mat');
+  if (matSel && !matSel._bound) { matSel._bound=true; matSel.addEventListener('change',e=>{simModulus=+e.target.value;updateSim();}); }
+  updateSim();
+}
+
+function lerp(a,b,t){return a+(b-a)*Math.min(1,Math.max(0,t))}
+function lerpHex(a,b,t){
+  const ah=[parseInt(a.slice(1,3),16),parseInt(a.slice(3,5),16),parseInt(a.slice(5,7),16)];
+  const bh=[parseInt(b.slice(1,3),16),parseInt(b.slice(3,5),16),parseInt(b.slice(5,7),16)];
+  return '#'+ah.map((v,i)=>Math.round(lerp(v,bh[i],t)).toString(16).padStart(2,'0')).join('');
+}
+function stressCol(t){return t<0.5?lerpHex('#E5A030','#C8853A',t*2):lerpHex('#C8853A','#C0473A',(t-0.5)*2)}
+
+function computeSim(k){
+  const sd=SIM_SHAPES[k],factor=sd.f[simLoadType]||0.7;
+  const netArea=Math.max(0.001,simSize*simSize*(1-sd.gap/100)*0.001);
+  const stress=simForce/(netArea*factor);
+  const stiffIdx=simModulus*simThick*factor*sd.iso/100;
+  const defl=(simForce*simSize)/(Math.max(1,stiffIdx)*100);
+  const maxLoad=stiffIdx*simThick*8*factor;
+  const safety=Math.min(99,maxLoad/Math.max(1,simForce));
+  const sl=Math.min(1,simForce/(maxLoad*1.2));
+  return{stress:stress.toFixed(0),defl:defl.toFixed(3),safety:safety.toFixed(1),eff:Math.round(factor*100),sl,maxLoad:maxLoad.toFixed(0)};
+}
+
+function drawCell(canvas,k,m){
+  const sd=SIM_SHAPES[k],ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const sl=m.sl,sc=stressCol(sl);
+  function cellFill(c,a){const r=parseInt(c.slice(1,3),16),g=parseInt(c.slice(3,5),16),b=parseInt(c.slice(5,7),16);return`rgba(${r},${g},${b},${a})`}
+  function fillStroke(pts){ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);pts.slice(1).forEach(p=>ctx.lineTo(p[0],p[1]));ctx.closePath();ctx.fillStyle=cellFill(sc,0.12+sl*0.28);ctx.fill();ctx.strokeStyle=sc;ctx.lineWidth=0.7+sl*1.1;ctx.stroke()}
+  const s=20,squishY=simLoadType==='compression'?lerp(1,0.75,sl):simLoadType==='tension'?lerp(1,1.25,sl):1;
+  const shX=simLoadType==='shear'?lerp(0,14,sl):0;
+  if(sd.sides===0){
+    if(sl>0.05){ctx.fillStyle=cellFill('#C0473A',0.06+sl*0.12);ctx.fillRect(0,0,W,H)}
+    for(let row=0;row<=H/(s*2)+1;row++)for(let col=0;col<=W/(s*2)+1;col++){const cx=col*s*2+s,cy=row*s*2+s,csl=Math.min(1,sl*(0.7+(Math.sin(col*7+row*3)*0.3)));const cs=stressCol(csl);ctx.beginPath();ctx.ellipse(cx,cy,s-1,(s-1)*lerp(1,0.8,sl),0,0,Math.PI*2);ctx.fillStyle=cellFill(cs,0.12+csl*0.28);ctx.fill();ctx.strokeStyle=cs;ctx.lineWidth=0.7+csl;ctx.stroke()}
+  }else{
+    const tD={
+      6:()=>{const hx=s*Math.sqrt(3),hy=s*1.5;for(let row=-1;row<H/hy+2;row++)for(let col=-1;col<W/hx+2;col++){const cx=col*hx+(row%2===0?0:hx/2),cy=row*hy,csl=Math.min(1,sl*(0.7+Math.abs(Math.sin(col*5+row*3))*0.6));const cs=stressCol(csl);const pts=[];for(let i=0;i<6;i++){const a=-Math.PI/6+Math.PI/3*i;pts.push([cx+s*Math.cos(a)+shX*0.4*Math.sin(a),cy+s*Math.sin(a)*squishY])}ctx.strokeStyle=cs;fillStroke(pts)}},
+      4:()=>{for(let r=0;r<=H/s+1;r++)for(let c=0;c<=W/s+1;c++){const x=c*s,y=r*s,csl=Math.min(1,sl*(0.65+Math.abs(Math.sin(c*4+r*2.5))*0.7));const cs=stressCol(csl);const so=shX*r/(H/s+1);ctx.strokeStyle=cs;fillStroke([[x+so,y],[x+s+so,y],[x+s+shX*(r+1)/(H/s+1),y+s*squishY],[x+shX*(r+1)/(H/s+1),y+s*squishY]])}},
+      3:()=>{const h=s*Math.sqrt(3)/2;for(let row=-1;row<H/h+2;row++)for(let col=-1;col<W/(s/2)+2;col++){const flip=(row+col)%2!==0,x=col*s/2,y=row*h,csl=Math.min(1,sl*(0.65+Math.abs(Math.sin(col*3.1+row*2.3))*0.7));ctx.strokeStyle=stressCol(csl);const pts=flip?[[x,y],[x+s/2,y+h*squishY],[x+s,y]]:[[x,y+h*squishY],[x+s/2,y],[x+s,y+h*squishY]];fillStroke(pts)}},
+      5:()=>{if(sl>0.05){ctx.fillStyle=cellFill('#C0473A',0.04+sl*0.1);ctx.fillRect(0,0,W,H)}const pw=s*2.1,ph=s*1.9;for(let row=-1;row<H/ph+2;row++)for(let col=-1;col<W/pw+2;col++){const cx=col*pw+(row%2===0?0:pw/2),cy=row*ph,csl=Math.min(1,sl*(0.6+Math.abs(Math.sin(col*4+row*3))*0.8));const cs=stressCol(csl);const pts=[];for(let i=0;i<5;i++){const a=-Math.PI/2+2*Math.PI*i/5;pts.push([cx+s*Math.cos(a),cy+s*Math.sin(a)*squishY])}ctx.strokeStyle=cs;fillStroke(pts)}},
+      8:()=>{for(let row=-1;row<H/(s*2)+2;row++)for(let col=-1;col<W/(s*2)+2;col++){const cx=col*(s*2+s*0.83),cy=row*(s*2+s*0.83),csl=Math.min(1,sl*(0.65+Math.abs(Math.sin(col*5+row*3.5))*0.7));const cs=stressCol(csl);const pts=[];for(let i=0;i<8;i++){const a=Math.PI/8+Math.PI/4*i;pts.push([cx+s*Math.cos(a),cy+s*Math.sin(a)*squishY])}ctx.strokeStyle=cs;fillStroke(pts)}}
+    };
+    (tD[sd.sides]||tD[6])();
+  }
+  // Load arrows
+  const ac=sl>0.6?'#C0473A':'#E5A030';
+  ctx.strokeStyle=ac;ctx.fillStyle=ac;ctx.lineWidth=1+sl*2;
+  function arrH(x,y,ang){ctx.save();ctx.translate(x,y);ctx.rotate(ang);ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-5,-2.5);ctx.lineTo(-5,2.5);ctx.closePath();ctx.fill();ctx.restore()}
+  ctx.setLineDash([3,4]);
+  if(simLoadType==='compression')for(let i=1;i<4;i++){const x=W*i/4;ctx.beginPath();ctx.moveTo(x,2);ctx.lineTo(x,H-2);ctx.stroke();arrH(x,12,Math.PI/2);arrH(x,H-12,-Math.PI/2)}
+  else if(simLoadType==='tension')for(let i=1;i<4;i++){const x=W*i/4;ctx.beginPath();ctx.moveTo(x,2);ctx.lineTo(x,H-2);ctx.stroke();arrH(x,12,-Math.PI/2);arrH(x,H-12,Math.PI/2)}
+  else if(simLoadType==='shear'){ctx.beginPath();ctx.moveTo(2,H*0.3);ctx.lineTo(W-2,H*0.3);ctx.stroke();arrH(W-8,H*0.3,0);ctx.beginPath();ctx.moveTo(2,H*0.7);ctx.lineTo(W-2,H*0.7);ctx.stroke();arrH(8,H*0.7,Math.PI)}
+  else if(simLoadType==='impact')for(let i=0;i<5;i++){const x=W*0.1+i*W*0.2;ctx.beginPath();ctx.moveTo(x,2);ctx.lineTo(x,2+12+sl*10);ctx.stroke();arrH(x,14+sl*10,Math.PI/2)}
+  ctx.setLineDash([]);
+}
+
+function badgeSim(eff){
+  if(eff>=88)return{t:'Excellent',bg:'rgba(229,160,48,0.15)',col:'#E5A030'};
+  if(eff>=72)return{t:'Good',bg:'rgba(91,143,191,0.12)',col:'#5B8FBF'};
+  if(eff>=55)return{t:'Moderate',bg:'rgba(200,133,58,0.12)',col:'#C8853A'};
+  return{t:'Poor',bg:'rgba(192,71,58,0.12)',col:'#C0473A'};
+}
+
+function updateSim(){
+  const selArr=[...simSelected];
+  const metrics=selArr.map(k=>({k,m:computeSim(k)})).sort((a,b)=>b.m.eff-a.m.eff);
+  const winner=metrics[0]?.k,loser=metrics[metrics.length-1]?.k;
+  const cols=selArr.length===1?1:selArr.length===2?2:3;
+  const cg=document.getElementById('simCellsGrid');
+  cg.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+  cg.innerHTML=metrics.map(({k,m})=>{
+    const sd=SIM_SHAPES[k],b=badgeSim(m.eff),isW=k===winner,isL=k===loser&&selArr.length>1;
+    const sc=stressCol(m.sl);
+    return`<div class="cell-panel ${isW?'winner-panel':isL?'failing-panel':''}">
+      <div class="cell-head"><span class="cell-name" style="color:${sd.color}">${sd.name}</span><span class="cell-badge" style="background:${b.bg};color:${b.col}">${b.t}</span></div>
+      <div class="cell-canvas-wrap"><canvas id="sc-${k}" width="200" height="160" style="border-radius:5px;max-width:100%"></canvas></div>
+      <div class="cell-stats">
+        <div class="cell-stat"><div class="cell-stat-lbl">Resistance</div><div class="cell-stat-val">${m.eff}%</div></div>
+        <div class="cell-stat"><div class="cell-stat-lbl">Safety</div><div class="cell-stat-val">${m.safety}</div></div>
+        <div class="cell-stat"><div class="cell-stat-lbl">Deflection</div><div class="cell-stat-val">${m.defl}mm</div></div>
+        <div class="cell-stat"><div class="cell-stat-lbl">Max load</div><div class="cell-stat-val">${m.maxLoad}kN</div></div>
+      </div>
+      <div style="padding:.5rem .85rem;border-top:1px solid var(--border)">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:3px">Stress level</div>
+        <div class="stress-bar"><div class="stress-fill" style="width:${Math.round(m.sl*100)}%;background:${sc}"></div></div>
+        ${isW?`<div style="font-size:10px;color:#E5A030;margin-top:5px">✦ Best for ${simLoadType}</div>`:''}
+        ${isL&&selArr.length>1?`<div style="font-size:10px;color:#C0473A;margin-top:5px">✗ Weakest under ${simLoadType}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  metrics.forEach(({k,m})=>{const cv=document.getElementById('sc-'+k);if(cv)drawCell(cv,k,m)});
+  const best=metrics[0],leastD=metrics.reduce((a,b)=>parseFloat(a.m.defl)<parseFloat(b.m.defl)?a:b);
+  const bestS=metrics.reduce((a,b)=>parseFloat(a.m.safety)>parseFloat(b.m.safety)?a:b);
+  const avgEff=Math.round(metrics.reduce((s,x)=>s+x.m.eff,0)/metrics.length);
+  document.getElementById('simSummary').innerHTML=`
+    <div class="s-card"><div class="s-card-lbl">Best performer</div><div class="s-card-val" style="color:${SIM_SHAPES[best.k].color}">${SIM_SHAPES[best.k].name}</div><div class="s-card-sub">${best.m.eff}% resistance</div></div>
+    <div class="s-card"><div class="s-card-lbl">Least deflection</div><div class="s-card-val">${SIM_SHAPES[leastD.k].name}</div><div class="s-card-sub">${leastD.m.defl} mm</div></div>
+    <div class="s-card"><div class="s-card-lbl">Best safety factor</div><div class="s-card-val">${SIM_SHAPES[bestS.k].name}</div><div class="s-card-sub">factor ${bestS.m.safety}</div></div>
+    <div class="s-card"><div class="s-card-lbl">Avg efficiency</div><div class="s-card-val">${avgEff}%</div><div class="s-card-sub">across ${metrics.length} shapes</div></div>`;
+  const vText=VERDICTS[simLoadType]?.[winner]||'';
+  const maxSL=Math.max(...metrics.map(x=>x.m.sl));
+  const warn=maxSL>0.75?` <span class="warn">Warning: critical stress — cells are deforming and cracking in the visualisation.</span>`:'';
+  document.getElementById('simVerdict').innerHTML=`<strong>Why ${SIM_SHAPES[winner].name} leads under ${simLoadType}:</strong> ${vText}${warn}`;
+}
+
+// ===================================================
+// DROP TEST (6 shapes + angle slider)
+// ===================================================
+(function(){
+
+const DT_ALL = ['hexagon','triangle','square','circle','pentagon','octagon'];
+
+const DT_SHAPES = {
+  hexagon: { name:'Hexagon', sides:6, ao:-Math.PI/6, color:'#E5A030', cellSize:20, impactFactor:0.98, absorbEff:0.91, crackThreshold:0.78, desc:'Progressive cell-wall buckling absorbs energy across the entire sheet. Impact zone remains localised. Highest structural integrity retained.' },
+  triangle:{ name:'Triangle',sides:3, ao:-Math.PI/2, color:'#9B7DD4', cellSize:18, impactFactor:0.74, absorbEff:0.62, crackThreshold:0.58, desc:'Rigid but brittle. High stress concentration at vertices. Cracks propagate from the impact point along the triangle edges.' },
+  square:  { name:'Square',  sides:4, ao:Math.PI/4,  color:'#5B8FBF', cellSize:16, impactFactor:0.65, absorbEff:0.52, crackThreshold:0.50, desc:'Susceptible to shear under impact. Cells rack diagonally. Lowest energy absorption of the perfect-tiling shapes.' },
+  circle:  { name:'Circle',  sides:0, ao:0,           color:'#C0473A', cellSize:18, impactFactor:0.48, absorbEff:0.38, crackThreshold:0.40, desc:'21% void fraction means gap zones collapse first. Arch action provides initial resistance but fails rapidly as inter-cell contact points fracture.' },
+  pentagon:{ name:'Pentagon',sides:5, ao:-Math.PI/2, color:'#C8853A', cellSize:17, impactFactor:0.60, absorbEff:0.50, crackThreshold:0.45, desc:'26% gap zones collapse before cells absorb significant energy. Unpredictable failure initiation at void interfaces.' },
+  octagon: { name:'Octagon', sides:8, ao:Math.PI/8,  color:'#4A9A6E', cellSize:19, impactFactor:0.80, absorbEff:0.74, crackThreshold:0.68, desc:'Angled walls provide progressive failure between circle and hexagon. Square-filler gap zones limit performance but overall absorption is second only to hexagon.' },
+};
+
+const dtState = {};
+DT_ALL.forEach(k => {
+  dtState[k] = { phase:'idle', frame:0, totalFrames:95, crackPts:[], integrity:100 };
+});
+
+let dtRAF = null, dtRunning = false;
+
+// ── Angle visualization canvas ──
+const angleVis = document.getElementById('dtAngleVis');
+const angleCtx = angleVis ? angleVis.getContext('2d') : null;
+function drawAngleVis(angleDeg) {
+  if (!angleCtx) return;
+  const W = angleVis.width = angleVis.offsetWidth || 180;
+  const H = 36;
+  angleCtx.clearRect(0, 0, W, H);
+  // Ground line
+  angleCtx.strokeStyle = 'rgba(200,133,58,0.3)';
+  angleCtx.lineWidth = 1;
+  angleCtx.beginPath(); angleCtx.moveTo(0, H-4); angleCtx.lineTo(W, H-4); angleCtx.stroke();
+  // Impact point
+  const impX = W * 0.5 + Math.tan(angleDeg * Math.PI / 180) * (H - 8) * 0.5;
+  const clampX = Math.min(W - 8, Math.max(8, impX));
+  // Trajectory line
+  const angleRad = angleDeg * Math.PI / 180;
+  const tLen = 24;
+  const tx = clampX - Math.sin(angleRad) * tLen;
+  const ty = (H - 8) - Math.cos(angleRad) * tLen;
+  angleCtx.strokeStyle = 'rgba(229,160,48,0.7)';
+  angleCtx.lineWidth = 1.5;
+  angleCtx.setLineDash([3, 3]);
+  angleCtx.beginPath(); angleCtx.moveTo(tx, ty); angleCtx.lineTo(clampX, H - 8); angleCtx.stroke();
+  angleCtx.setLineDash([]);
+  // Arrow tip
+  angleCtx.fillStyle = '#E5A030';
+  angleCtx.beginPath(); angleCtx.arc(clampX, H - 8, 3, 0, Math.PI * 2); angleCtx.fill();
+  // Angle arc
+  if (angleDeg > 5) {
+    angleCtx.strokeStyle = 'rgba(229,160,48,0.4)';
+    angleCtx.lineWidth = 1;
+    angleCtx.beginPath();
+    angleCtx.arc(clampX, H - 8, 10, -Math.PI/2, -Math.PI/2 + angleRad);
+    angleCtx.stroke();
+  }
+}
+drawAngleVis(0);
+
+document.getElementById('dtAngle').addEventListener('input', e => {
+  const a = +e.target.value;
+  document.getElementById('dtAngleLbl').textContent = a + '°';
+  drawAngleVis(a);
+});
+
+// ── Slider labels ──
+document.getElementById('dtWt').addEventListener('input', e => document.getElementById('dtWtLbl').textContent = e.target.value + ' kg');
+document.getElementById('dtHt').addEventListener('input', e => document.getElementById('dtHtLbl').textContent = (+e.target.value).toFixed(1) + ' m');
+document.getElementById('dtThk').addEventListener('input', e => document.getElementById('dtThkLbl').textContent = e.target.value + ' mm');
+
+function dtResizeAll() {
+  DT_ALL.forEach(k => {
+    const cv = document.getElementById('dtc-' + k);
+    if (!cv) return;
+    const wrap = cv.parentElement;
+    cv.width = wrap.clientWidth || 260;
+    cv.height = wrap.clientHeight || 230;
+  });
+}
+
+function dtStressCol(v, alpha) {
+  if (v < 0.35) return `rgba(229,160,48,${alpha})`;
+  if (v < 0.60) return `rgba(200,133,58,${alpha})`;
+  if (v < 0.80) return `rgba(192,71,58,${alpha})`;
+  return `rgba(192,71,58,${Math.min(1, alpha * 1.4)})`;
+}
+
+function dtCompute(wt, ht, thk, matArr, angleDeg) {
+  const [E, rho, sigY] = matArr;
+  const KE = wt * 9.81 * ht;
+  // Angle factor: off-axis loading increases effective energy on the structure
+  const angleFactor = 1 + Math.sin(angleDeg * Math.PI / 180) * 0.35;
+  const effectiveKE = KE * angleFactor;
+  const results = {};
+  Object.entries(DT_SHAPES).forEach(([k, sd]) => {
+    const capFactor = sd.absorbEff * (1 + (thk - 2) * 0.08) * (E / 70);
+    const absorbed = Math.min(effectiveKE, effectiveKE * capFactor * 0.9);
+    const deformMM = ((effectiveKE - absorbed) / (E * thk * thk * 0.01)) * 15 + 0.5;
+    const stressLevel = Math.min(1, effectiveKE / (sigY * thk * thk * sd.impactFactor * 0.5));
+    const safetyFactor = (sigY * thk * thk * sd.impactFactor * 0.5) / effectiveKE;
+    const integrityLoss = Math.max(0, Math.min(100, stressLevel > sd.crackThreshold
+      ? 20 + (stressLevel - sd.crackThreshold) * 180
+      : stressLevel * 12));
+    results[k] = {
+      KE: KE.toFixed(1), effectiveKE: effectiveKE.toFixed(1),
+      absorbed: absorbed.toFixed(1), deformMM: Math.max(0.1, deformMM).toFixed(2),
+      stressLevel: Math.min(1, stressLevel),
+      safetyFactor: Math.max(0.1, safetyFactor).toFixed(2),
+      integrityLoss: Math.round(integrityLoss)
+    };
+  });
+  return results;
+}
+
+function getParams() {
+  const wt = +document.getElementById('dtWt').value;
+  const ht = +document.getElementById('dtHt').value;
+  const thk = +document.getElementById('dtThk').value;
+  const angleDeg = +document.getElementById('dtAngle').value;
+  const matArr = document.getElementById('dtMat').value.split(',').map(Number);
+  return { wt, ht, thk, matArr, angleDeg };
+}
+
+// ── Draw frame ──
+function dtDrawFrame(k, compute, angleDeg) {
+  const cv = document.getElementById('dtc-' + k);
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const sd = DT_SHAPES[k];
+  const st = dtState[k];
+  const res = compute[k];
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#180E06';
+  ctx.fillRect(0, 0, W, H);
+
+  const angleRad = angleDeg * Math.PI / 180;
+  // Angle-shifted impact center
+  const impactCX = W / 2 + Math.tan(angleRad) * (H * 0.3) * 0.5;
+  const clampedImpactCX = Math.min(W * 0.85, Math.max(W * 0.15, impactCX));
+  const sheetY = Math.round(H * 0.60);
+  const sheetH = Math.round(H * 0.32);
+  const prog = Math.min(1, st.frame / st.totalFrames);
+  const cs = sd.cellSize;
+  const iZoneR = 28 + prog * (W * 0.30) * res.stressLevel;
+
+  // ── Draw sheet cells ──
+  function drawCells() {
+    if (sd.sides === 0) {
+      // Circle
+      if (res.stressLevel > 0.1) { ctx.fillStyle = `rgba(192,71,58,${0.04 + res.stressLevel * 0.08})`; ctx.fillRect(0, sheetY, W, sheetH); }
+      const step = cs * 2;
+      for (let row = -1; row < Math.ceil(sheetH / step) + 2; row++) {
+        for (let col = -1; col < Math.ceil(W / step) + 2; col++) {
+          const cx = col * step + cs, cy = sheetY + row * step + cs;
+          if (cy > sheetY + sheetH + cs) continue;
+          const dx = cx - clampedImpactCX, dy = cy - sheetY;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const ls = prog > 0.35 ? Math.min(1, res.stressLevel * Math.exp(-dist / (iZoneR * 0.7)) * 1.3) : 0;
+          const defY = prog > 0.35 ? Math.min(sheetH * 0.15, res.stressLevel * Math.exp(-dist / (iZoneR * 0.4)) * sheetH * 0.15 * Math.min(1, (prog - 0.35) * 3)) : 0;
+          ctx.beginPath();
+          ctx.ellipse(cx, cy + defY, cs - 1, (cs - 1) * lerp(1, 0.75, ls), 0, 0, Math.PI * 2);
+          ctx.fillStyle = dtStressCol(ls, 0.08 + ls * 0.22); ctx.fill();
+          ctx.strokeStyle = dtStressCol(ls, 0.6 + ls * 0.4); ctx.lineWidth = 0.7 + ls; ctx.stroke();
+        }
+      }
+    } else if (sd.sides === 6) {
+      const hx = cs * Math.sqrt(3), hy = cs * 1.5;
+      for (let row = -1; row < Math.ceil(sheetH / hy) + 2; row++) {
+        for (let col = -1; col < Math.ceil(W / hx) + 2; col++) {
+          const cx = col * hx + (row % 2 === 0 ? 0 : hx / 2), cy = sheetY + row * hy;
+          if (cy + cs < sheetY - cs || cy - cs > sheetY + sheetH + cs) continue;
+          const dx = cx - clampedImpactCX, dy = cy - sheetY;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const ls = prog > 0.35 ? Math.min(1, res.stressLevel * Math.exp(-dist / (iZoneR * 0.7)) * 1.4) : 0;
+          const defY = prog > 0.35 ? Math.min(sheetH * 0.18, res.stressLevel * Math.exp(-dist / (iZoneR * 0.4)) * sheetH * 0.18 * Math.min(1, (prog - 0.35) * 3)) : 0;
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) { const a = -Math.PI/6 + Math.PI/3*i; const px = cx + (cs-1)*Math.cos(a), py = cy + (cs-1)*Math.sin(a) + defY; i===0?ctx.moveTo(px,py):ctx.lineTo(px,py); }
+          ctx.closePath();
+          ctx.fillStyle = dtStressCol(ls, 0.06 + ls * 0.24); ctx.fill();
+          ctx.strokeStyle = dtStressCol(ls, 0.7 + ls * 0.3); ctx.lineWidth = 0.8 + ls * 1.2; ctx.stroke();
+          if (ls > sd.crackThreshold && prog > 0.55) { ctx.save(); ctx.globalAlpha = (ls - sd.crackThreshold) * 2; ctx.strokeStyle = '#C0473A'; ctx.lineWidth = 0.6; ctx.setLineDash([1.5, 2.5]); const cLen = cs * 0.6 * ls; for (let j = 0; j < 3; j++) { const ca = (j/3)*Math.PI*2 + (col+row)*1.1; ctx.beginPath(); ctx.moveTo(cx, cy+defY); ctx.lineTo(cx+Math.cos(ca)*cLen, cy+defY+Math.sin(ca)*cLen); ctx.stroke(); } ctx.setLineDash([]); ctx.restore(); }
+        }
+      }
+    } else if (sd.sides === 4) {
+      for (let row = -1; row < Math.ceil(sheetH / cs) + 2; row++) {
+        for (let col = -1; col < Math.ceil(W / cs) + 2; col++) {
+          const cx = col * cs, cy = sheetY + row * cs;
+          if (cy > sheetY + sheetH + cs) continue;
+          const dx = cx + cs/2 - clampedImpactCX, dy = cy + cs/2 - sheetY;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const ls = prog > 0.35 ? Math.min(1, res.stressLevel * Math.exp(-dist / (iZoneR * 0.65)) * 1.5) : 0;
+          const shearO = prog > 0.35 ? ls * cs * 0.22 * (dx > 0 ? 1 : -1) * Math.min(1, (prog-0.35)*2.5) : 0;
+          const defY = prog > 0.35 ? Math.min(sheetH*0.22, res.stressLevel * Math.exp(-dist/(iZoneR*0.35)) * sheetH * 0.22 * Math.min(1,(prog-0.35)*3)) : 0;
+          const pts = [[cx+shearO*0.5,cy+defY*0.5],[cx+cs+shearO*0.5,cy+defY*0.5],[cx+cs-shearO*0.5,cy+cs+defY],[cx-shearO*0.5,cy+cs+defY]];
+          ctx.beginPath(); ctx.moveTo(...pts[0]); pts.slice(1).forEach(p=>ctx.lineTo(...p)); ctx.closePath();
+          ctx.fillStyle = dtStressCol(ls, 0.06 + ls * 0.26); ctx.fill();
+          ctx.strokeStyle = dtStressCol(ls, 0.65 + ls * 0.35); ctx.lineWidth = 0.8 + ls; ctx.stroke();
+          if (ls > sd.crackThreshold && prog > 0.5) { ctx.save(); ctx.globalAlpha = (ls-sd.crackThreshold)*2.5; ctx.strokeStyle='#C0473A'; ctx.lineWidth=0.7; ctx.setLineDash([1,2.5]); ctx.beginPath(); ctx.moveTo(...pts[0]); ctx.lineTo(...pts[2]); ctx.stroke(); ctx.beginPath(); ctx.moveTo(...pts[1]); ctx.lineTo(...pts[3]); ctx.stroke(); ctx.setLineDash([]); ctx.restore(); }
+        }
+      }
+    } else if (sd.sides === 3) {
+      const th = cs * Math.sqrt(3) / 2;
+      for (let row = -1; row < Math.ceil(sheetH/th)+2; row++) {
+        for (let col = -2; col < Math.ceil(W/(cs/2))+2; col++) {
+          const flip=(row+col)%2!==0, x=col*cs/2, y=sheetY+row*th;
+          if (y > sheetY+sheetH+th) continue;
+          const tcx=x+cs/3, tcy=y+th/2;
+          const dx=tcx-clampedImpactCX, dy=tcy-sheetY;
+          const dist=Math.sqrt(dx*dx+dy*dy);
+          const ls=prog>0.35?Math.min(1,res.stressLevel*Math.exp(-dist/(iZoneR*0.55))*1.6):0;
+          const defY=prog>0.35?Math.min(sheetH*0.15,res.stressLevel*Math.exp(-dist/(iZoneR*0.3))*sheetH*0.15*Math.min(1,(prog-0.35)*3)):0;
+          const pts=flip?[[x,y+defY*0.3],[x+cs/2,y+th+defY],[x+cs,y+defY*0.3]]:[[x,y+th+defY],[x+cs/2,y+defY*0.3],[x+cs,y+th+defY]];
+          ctx.beginPath(); ctx.moveTo(...pts[0]); pts.slice(1).forEach(p=>ctx.lineTo(...p)); ctx.closePath();
+          ctx.fillStyle=dtStressCol(ls,0.05+ls*0.24); ctx.fill();
+          ctx.strokeStyle=dtStressCol(ls,0.65+ls*0.35); ctx.lineWidth=0.8+ls; ctx.stroke();
+          if(ls>sd.crackThreshold&&prog>0.52){ctx.save();ctx.globalAlpha=(ls-sd.crackThreshold)*2.8;ctx.strokeStyle='#C0473A';ctx.lineWidth=0.65;ctx.setLineDash([1.2,2]);ctx.beginPath();ctx.moveTo(...pts[1]);ctx.lineTo(...pts[0]);ctx.stroke();ctx.beginPath();ctx.moveTo(...pts[1]);ctx.lineTo(...pts[2]);ctx.stroke();ctx.setLineDash([]);ctx.restore()}
+        }
+      }
+    } else if (sd.sides === 5) {
+      const pw = cs * 2.1, ph = cs * 1.9;
+      for (let row = -1; row < Math.ceil(sheetH/ph)+2; row++) {
+        for (let col = -1; col < Math.ceil(W/pw)+2; col++) {
+          const cx=col*pw+(row%2===0?0:pw/2), cy=sheetY+row*ph;
+          if (cy > sheetY+sheetH+ph) continue;
+          const dx=cx-clampedImpactCX, dy=cy-sheetY;
+          const dist=Math.sqrt(dx*dx+dy*dy);
+          const ls=prog>0.35?Math.min(1,res.stressLevel*Math.exp(-dist/(iZoneR*0.6))*1.4):0;
+          const defY=prog>0.35?Math.min(sheetH*0.14,res.stressLevel*Math.exp(-dist/(iZoneR*0.38))*sheetH*0.14*Math.min(1,(prog-0.35)*3)):0;
+          const pts=[]; for(let i=0;i<5;i++){const a=-Math.PI/2+2*Math.PI*i/5;pts.push([cx+cs*Math.cos(a),cy+cs*Math.sin(a)+defY])}
+          ctx.beginPath(); ctx.moveTo(...pts[0]); pts.slice(1).forEach(p=>ctx.lineTo(...p)); ctx.closePath();
+          ctx.fillStyle=dtStressCol(ls,0.05+ls*0.22); ctx.fill();
+          ctx.strokeStyle=dtStressCol(ls,0.6+ls*0.4); ctx.lineWidth=0.8+ls; ctx.stroke();
+          if(ls>sd.crackThreshold&&prog>0.5){ctx.save();ctx.globalAlpha=(ls-sd.crackThreshold)*2;ctx.strokeStyle='#C0473A';ctx.lineWidth=0.7;ctx.setLineDash([1.5,3]);for(let j=0;j<3;j++){ctx.beginPath();ctx.moveTo(cx,cy+defY);ctx.lineTo(pts[j][0],pts[j][1]);ctx.stroke()}ctx.setLineDash([]);ctx.restore()}
+        }
+      }
+    } else if (sd.sides === 8) {
+      const step = cs * 2 + cs * 0.83;
+      for (let row = -1; row < Math.ceil(sheetH/step)+2; row++) {
+        for (let col = -1; col < Math.ceil(W/step)+2; col++) {
+          const cx=col*step, cy=sheetY+row*step;
+          if (cy > sheetY+sheetH+step) continue;
+          const dx=cx-clampedImpactCX, dy=cy-sheetY;
+          const dist=Math.sqrt(dx*dx+dy*dy);
+          const ls=prog>0.35?Math.min(1,res.stressLevel*Math.exp(-dist/(iZoneR*0.68))*1.35):0;
+          const defY=prog>0.35?Math.min(sheetH*0.16,res.stressLevel*Math.exp(-dist/(iZoneR*0.42))*sheetH*0.16*Math.min(1,(prog-0.35)*3)):0;
+          const pts=[]; for(let i=0;i<8;i++){const a=Math.PI/8+Math.PI/4*i;pts.push([cx+cs*Math.cos(a),cy+cs*Math.sin(a)+defY])}
+          ctx.beginPath(); ctx.moveTo(...pts[0]); pts.slice(1).forEach(p=>ctx.lineTo(...p)); ctx.closePath();
+          ctx.fillStyle=dtStressCol(ls,0.06+ls*0.24); ctx.fill();
+          ctx.strokeStyle=dtStressCol(ls,0.65+ls*0.35); ctx.lineWidth=0.8+ls; ctx.stroke();
+          if(ls>sd.crackThreshold&&prog>0.52){ctx.save();ctx.globalAlpha=(ls-sd.crackThreshold)*1.8;ctx.strokeStyle='#C0473A';ctx.lineWidth=0.6;ctx.setLineDash([1.5,3]);for(let j=0;j<4;j++){ctx.beginPath();ctx.moveTo(cx,cy+defY);ctx.lineTo(pts[j*2][0],pts[j*2][1]);ctx.stroke()}ctx.setLineDash([]);ctx.restore()}
+        }
+      }
+    }
+  }
+
+  drawCells();
+
+  // Sheet border + ground
+  ctx.strokeStyle='rgba(200,133,58,0.2)'; ctx.lineWidth=1; ctx.strokeRect(0,sheetY,W,sheetH);
+  ctx.fillStyle='rgba(24,14,6,0.92)'; ctx.fillRect(0,sheetY+sheetH,W,H-sheetY-sheetH);
+  ctx.fillStyle='rgba(200,133,58,0.12)'; ctx.fillRect(0,sheetY+sheetH,W,3);
+
+  // Shockwave ring
+  if (prog > 0.35 && prog < 0.85) {
+    const ringR=(prog-0.35)/0.5*W*0.55*res.stressLevel;
+    const ringA=Math.max(0,(0.85-prog)*2.5);
+    ctx.beginPath(); ctx.arc(clampedImpactCX,sheetY+sheetH*0.15,ringR,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(192,71,58,${ringA*0.5})`; ctx.lineWidth=2+res.stressLevel*3; ctx.stroke();
+    if(ringR>30){ctx.beginPath();ctx.arc(clampedImpactCX,sheetY+sheetH*0.15,ringR*0.55,0,Math.PI*2);ctx.strokeStyle=`rgba(200,133,58,${ringA*0.3})`;ctx.lineWidth=1;ctx.stroke()}
+  }
+
+  // Trajectory line (angle preview while ball falling)
+  if (prog < 0.38 && angleDeg > 0) {
+    const bR=18 + +document.getElementById('dtWt').value*0.3;
+    const ballStartY=16+bR;
+    const ballCurY=ballStartY+(sheetY-bR-ballStartY)*(prog/0.38);
+    ctx.save(); ctx.globalAlpha=0.3*(1-prog/0.38);
+    ctx.strokeStyle='rgba(229,160,48,0.5)'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
+    ctx.beginPath();
+    ctx.moveTo(W/2, ballStartY);
+    ctx.lineTo(clampedImpactCX, sheetY);
+    ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+  }
+
+  // Falling weight
+  const ballR=18+ +document.getElementById('dtWt').value*0.3;
+  const ballMaxY=sheetY-ballR-2, ballStartY2=16+ballR;
+  const ballX=lerp(W/2, clampedImpactCX, Math.min(1, prog/0.38));
+  const ballCurY2=prog<0.38
+    ?ballStartY2+(ballMaxY-ballStartY2)*(prog/0.38)
+    :ballMaxY+(ballR*0.4)*Math.sin((prog-0.38)/0.12*Math.PI)*(prog<0.5?1:0);
+
+  // Shadow
+  const sA=0.05+prog*0.15, sR=ballR*(0.5+prog*0.6);
+  ctx.beginPath(); ctx.ellipse(clampedImpactCX,sheetY+2,sR,sR*0.22,0,0,Math.PI*2);
+  ctx.fillStyle=`rgba(0,0,0,${sA})`; ctx.fill();
+
+  // Ball
+  const grad=ctx.createRadialGradient(ballX-ballR*0.3,ballCurY2-ballR*0.3,ballR*0.1,ballX,ballCurY2,ballR);
+  grad.addColorStop(0,'rgba(245,207,90,0.9)');
+  grad.addColorStop(0.5,'rgba(200,133,58,0.85)');
+  grad.addColorStop(1,'rgba(80,40,10,0.9)');
+  ctx.beginPath(); ctx.arc(ballX,ballCurY2,ballR,0,Math.PI*2);
+  ctx.fillStyle=grad; ctx.fill();
+  ctx.strokeStyle='rgba(229,160,48,0.5)'; ctx.lineWidth=1.5; ctx.stroke();
+
+  // Weight label
+  ctx.fillStyle='#F5E8C0'; ctx.font=`bold ${Math.round(ballR*0.44)}px Outfit,sans-serif`;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(document.getElementById('dtWt').value+'kg',ballX,ballCurY2);
+
+  // Velocity arrow
+  if(prog<0.36&&prog>0.05){
+    const arLen=14+prog*18;
+    ctx.strokeStyle='rgba(229,160,48,0.6)'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
+    const vx=Math.sin(angleRad)*arLen, vy=Math.cos(angleRad)*arLen;
+    ctx.beginPath(); ctx.moveTo(ballX,ballCurY2+ballR); ctx.lineTo(ballX+vx*0.3,ballCurY2+ballR+arLen); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='rgba(229,160,48,0.6)';
+    ctx.beginPath(); ctx.moveTo(ballX-3,ballCurY2+ballR+arLen); ctx.lineTo(ballX+3,ballCurY2+ballR+arLen); ctx.lineTo(ballX,ballCurY2+ballR+arLen+7); ctx.closePath(); ctx.fill();
+  }
+
+  // Phase label
+  const ind=document.getElementById('dtp-ind-'+k);
+  if(ind){
+    if(prog<0.38){ind.style.display='block';ind.style.background='rgba(155,125,212,0.2)';ind.style.color='#9B7DD4';ind.textContent='FALLING'}
+    else if(prog<0.55){ind.style.display='block';ind.style.background='rgba(200,133,58,0.22)';ind.style.color='#C8853A';ind.textContent='IMPACT'}
+    else if(prog<1){ind.style.display='block';ind.style.background=res.stressLevel>sd.crackThreshold?'rgba(192,71,58,0.22)':'rgba(229,160,48,0.15)';ind.style.color=res.stressLevel>sd.crackThreshold?'#C0473A':'#E5A030';ind.textContent=res.stressLevel>sd.crackThreshold?'CRACKING':'ABSORBING'}
+    else{ind.style.display='block';const integ=100-res.integrityLoss;ind.style.background=integ>70?'rgba(229,160,48,0.15)':integ>40?'rgba(200,133,58,0.2)':'rgba(192,71,58,0.2)';ind.style.color=integ>70?'#E5A030':integ>40?'#C8853A':'#C0473A';ind.textContent=integ>70?'INTACT':integ>40?'DAMAGED':'FAILED'}
+  }
+}
+
+function dtUpdateStats(k, res) {
+  const integ = 100 - res.integrityLoss;
+  const statsEl = document.getElementById('dts-' + k);
+  const vals = statsEl.querySelectorAll('.dt-stat-val');
+  vals[0].textContent = res.deformMM + ' mm';
+  vals[1].textContent = res.absorbed + ' J';
+  vals[2].textContent = res.safetyFactor + '×';
+  const verdict = integ > 80 ? 'Intact ✓' : integ > 55 ? 'Damaged' : integ > 25 ? 'Severe crack' : 'Failed ✗';
+  vals[3].textContent = verdict;
+  vals[3].style.color = integ > 80 ? '#E5A030' : integ > 55 ? '#C8853A' : '#C0473A';
+  const fillEl = document.getElementById('dtf-' + k);
+  const intLbl = document.getElementById('dti-' + k);
+  const barColor = integ > 70 ? '#E5A030' : integ > 40 ? '#C8853A' : '#C0473A';
+  fillEl.style.width = integ + '%'; fillEl.style.background = barColor;
+  if (intLbl) { intLbl.textContent = integ + '%'; intLbl.style.color = barColor; }
+  const badgeEl = document.getElementById('dtb-' + k);
+  if (badgeEl) {
+    if (integ > 80) { badgeEl.textContent='Intact'; badgeEl.style.background='rgba(229,160,48,0.15)'; badgeEl.style.color='#E5A030'; }
+    else if (integ > 55) { badgeEl.textContent='Damaged'; badgeEl.style.background='rgba(200,133,58,0.18)'; badgeEl.style.color='#C8853A'; }
+    else { badgeEl.textContent='Failed'; badgeEl.style.background='rgba(192,71,58,0.18)'; badgeEl.style.color='#C0473A'; }
+  }
+}
+
+function dtUpdateSummary(compute) {
+  const best = DT_ALL.reduce((a,b) => (100-compute[a].integrityLoss) >= (100-compute[b].integrityLoss) ? a : b);
+  const worst = DT_ALL.reduce((a,b) => (100-compute[a].integrityLoss) <= (100-compute[b].integrityLoss) ? a : b);
+  DT_ALL.forEach(k => {
+    const panel = document.getElementById('dtp-' + k);
+    panel.classList.remove('dt-winner','dt-loser');
+  });
+  document.getElementById('dtp-' + best).classList.add('dt-winner');
+  document.getElementById('dtp-' + worst).classList.add('dt-loser');
+  const hexRes = compute.hexagon;
+  const KE = hexRes.KE, effKE = hexRes.effectiveKE;
+  const angleNote = effKE !== KE ? ` (angle-adjusted: ${effKE} J)` : '';
+  document.getElementById('dtSummary').innerHTML = `
+    <strong>Results:</strong> KE = ${KE} J${angleNote} &nbsp;|&nbsp;
+    Winner: <strong style="color:${DT_SHAPES[best].color}">${DT_SHAPES[best].name}</strong> (integrity: ${100-compute[best].integrityLoss}%)
+    &nbsp;|&nbsp; Weakest: <strong style="color:#C0473A">${DT_SHAPES[worst].name}</strong> (integrity: ${100-compute[worst].integrityLoss}%)
+    <br><br>
+    <strong>Why ${DT_SHAPES[best].name} performed best:</strong> ${DT_SHAPES[best].desc}
+    <br>
+    <strong>Why ${DT_SHAPES[worst].name} performed worst:</strong> ${DT_SHAPES[worst].desc}`;
+}
+
+window.runDropTest = function() {
+  if (dtRunning) return;
+  dtRunning = true;
+  const btn = document.getElementById('dtBtn');
+  btn.classList.add('running');
+  btn.querySelector('span').textContent = '⏳ Running…';
+  btn.disabled = true;
+  dtResizeAll();
+  const { wt, ht, thk, matArr, angleDeg } = getParams();
+  const compute = dtCompute(wt, ht, thk, matArr, angleDeg);
+  document.getElementById('dtEnergyInfo').textContent =
+    `KE: ${compute.hexagon.KE} J  |  Weight: ${wt} kg  |  Height: ${ht.toFixed(1)} m  |  Angle: ${angleDeg}°`;
+
+  DT_ALL.forEach(k => {
+    const st = dtState[k];
+    st.frame = 0; st.phase = 'falling';
+    const ind = document.getElementById('dtp-ind-' + k);
+    if (ind) { ind.style.display='block'; ind.textContent='READY'; }
+    const fillEl = document.getElementById('dtf-' + k);
+    if (fillEl) { fillEl.style.width='100%'; fillEl.style.background='#E5A030'; }
+    const statsEl = document.getElementById('dts-' + k);
+    if (statsEl) statsEl.querySelectorAll('.dt-stat-val').forEach(v => { v.textContent='—'; v.style.color=''; });
+  });
+  if (dtRAF) cancelAnimationFrame(dtRAF);
+  function loop() {
+    let allDone = true;
+    DT_ALL.forEach(k => {
+      const st = dtState[k];
+      if (st.frame < st.totalFrames) {
+        allDone = false;
+        dtDrawFrame(k, compute, angleDeg);
+        st.frame++;
+        if (st.frame === st.totalFrames) dtUpdateStats(k, compute[k]);
+      }
+    });
+    if (!allDone) { dtRAF = requestAnimationFrame(loop); }
+    else {
+      dtUpdateSummary(compute);
+      dtRunning = false;
+      btn.classList.remove('running');
+      btn.querySelector('span').textContent = '⬡ DROP';
+      btn.disabled = false;
+    }
+  }
+  loop();
+};
+
+// Draw idle state on load
+window.addEventListener('load', () => {
+  dtResizeAll();
+  DT_ALL.forEach(k => {
+    const cv = document.getElementById('dtc-' + k);
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const sd = DT_SHAPES[k];
+    const W = cv.width, H = cv.height;
+    ctx.fillStyle = '#180E06'; ctx.fillRect(0, 0, W, H);
+    const sheetY = H * 0.60, sheetH = H * 0.32;
+    const cs = sd.cellSize;
+    ctx.strokeStyle = sd.color + '44'; ctx.fillStyle = sd.color + '08'; ctx.lineWidth = 0.7;
+    if (sd.sides === 0) {
+      const step = cs * 2;
+      for (let r = -1; r < Math.ceil(sheetH/step)+2; r++) for (let c = -1; c < Math.ceil(W/step)+2; c++) {
+        ctx.beginPath(); ctx.ellipse(c*step+cs,sheetY+r*step+cs,cs-1,cs-1,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
+      }
+    } else if (sd.sides === 6) {
+      const hx=cs*Math.sqrt(3),hy=cs*1.5;
+      for (let r=-1;r<Math.ceil(sheetH/hy)+2;r++) for (let c=-1;c<Math.ceil(W/hx)+2;c++) {
+        const cx=c*hx+(r%2===0?0:hx/2),cy=sheetY+r*hy;
+        ctx.beginPath(); for(let i=0;i<6;i++){const a=-Math.PI/6+Math.PI/3*i;i?ctx.lineTo(cx+(cs-1)*Math.cos(a),cy+(cs-1)*Math.sin(a)):ctx.moveTo(cx+(cs-1)*Math.cos(a),cy+(cs-1)*Math.sin(a))}
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+      }
+    } else {
+      const step = sd.sides === 4 ? cs : sd.sides === 3 ? cs : sd.sides === 5 ? cs*2.1 : sd.sides === 8 ? cs*2+cs*0.83 : cs;
+      for (let r=-1;r<Math.ceil(sheetH/step)+2;r++) for (let c=-1;c<Math.ceil(W/step)+2;c++) {
+        const cx=c*step+(sd.sides===5&&r%2!==0?step/2:0),cy=sheetY+r*step;
+        if(sd.sides===4){ctx.strokeRect(c*cs,sheetY+r*cs,cs-1,cs-1);continue}
+        ctx.beginPath();
+        for(let i=0;i<sd.sides;i++){const a=sd.ao+2*Math.PI*i/sd.sides;i?ctx.lineTo(cx+cs*Math.cos(a),cy+cs*Math.sin(a)):ctx.moveTo(cx+cs*Math.cos(a),cy+cs*Math.sin(a))}
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+      }
+    }
+    // Resting ball
+    const bR=18+ +document.getElementById('dtWt').value*0.3;
+    const bY=sheetY-bR-8;
+    const g=ctx.createRadialGradient(W/2-bR*0.3,bY-bR*0.3,bR*0.1,W/2,bY,bR);
+    g.addColorStop(0,'rgba(245,207,90,0.9)'); g.addColorStop(0.5,'rgba(200,133,58,0.85)'); g.addColorStop(1,'rgba(80,40,10,0.9)');
+    ctx.beginPath(); ctx.arc(W/2,bY,bR,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
+    ctx.strokeStyle=sd.color+'66'; ctx.lineWidth=1; ctx.stroke();
+    ctx.fillStyle='#F5E8C0'; ctx.font=`bold ${Math.round(bR*0.44)}px Outfit,sans-serif`;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(document.getElementById('dtWt').value+'kg',W/2,bY);
+  });
+});
+
+window.addEventListener('resize', () => { dtResizeAll(); drawAngleVis(+document.getElementById('dtAngle').value); });
+
+})(); // end drop test IIFE
+</script>
+</body>
+</html>
